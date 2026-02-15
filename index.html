@@ -216,6 +216,65 @@
       margin: 20px auto 0;
     }
 
+    /* Parallax Background Sections */
+    .parallax-section {
+      position: relative;
+      height: 60vh;
+      min-height: 400px;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .parallax-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(245, 240, 235, 0.3) 0%,
+        rgba(42, 74, 82, 0.4) 50%,
+        rgba(245, 240, 235, 0.3) 100%
+      );
+    }
+
+    .parallax-quote {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .parallax-quote-text {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(18px, 4vw, 28px);
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 0.15em;
+      line-height: 2;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .parallax-quote-location {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.2em;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .parallax-section {
+        background-attachment: scroll;
+        height: 50vh;
+        min-height: 300px;
+      }
+    }
+
     /* Navigation */
     .nav {
       position: fixed;
@@ -3094,6 +3153,17 @@
     </div>
   </section>
 
+  <!-- Parallax Section 1 -->
+  <section class="parallax-section" style="background-image: url('yokohama/40257.jpg');">
+    <div class="parallax-quote">
+      <p class="parallax-quote-text">
+        「ここで始まったんだよ」<br>
+        そう話せる一枚に。
+      </p>
+      <p class="parallax-quote-location">— 横浜・みなとみらい</p>
+    </div>
+  </section>
+
   <!-- Pain Points Section -->
   <section class="section painpoints">
     <div class="container">
@@ -3227,6 +3297,17 @@
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Parallax Section 2 -->
+  <section class="parallax-section" style="background-image: url('komagane/40277_0.jpg');">
+    <div class="parallax-quote">
+      <p class="parallax-quote-text">
+        山の空気、鳥の声、<br>
+        静寂の中で刻む時間。
+      </p>
+      <p class="parallax-quote-location">— 駒ヶ根・アルプスのふもと</p>
     </div>
   </section>
 
