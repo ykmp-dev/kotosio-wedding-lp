@@ -1,0 +1,22 @@
+# 環境変数・認証情報
+.env
+.env.local
+.mcp.json
+
+# OS
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# エディタ
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# ビルド
+dist/
+
+# Netlify
+.netlify/
