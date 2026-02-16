@@ -512,9 +512,9 @@
     .wedding-deco {
       position: fixed;
       pointer-events: none;
-      z-index: 5;
+      z-index: 50;
       opacity: 0;
-      transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: opacity 1.5s ease, transform 1.5s ease;
     }
 
     .wedding-deco svg {
@@ -524,22 +524,22 @@
     }
 
     .wedding-deco.from-left {
-      left: -150px;
-      transform: translateX(-100px) rotate(-8deg);
+      left: 20px;
+      transform: translateX(-200px) rotate(-8deg);
     }
 
     .wedding-deco.from-right {
-      right: -150px;
-      transform: translateX(100px) rotate(8deg);
+      right: 20px;
+      transform: translateX(200px) rotate(8deg);
     }
 
     .wedding-deco.visible.from-left {
-      opacity: 0.15;
+      opacity: 0.12;
       transform: translateX(0) rotate(-8deg);
     }
 
     .wedding-deco.visible.from-right {
-      opacity: 0.15;
+      opacity: 0.12;
       transform: translateX(0) rotate(8deg);
     }
 
@@ -2832,11 +2832,16 @@
       background: linear-gradient(90deg, var(--yokohama-light), var(--yokohama));
       color: var(--white);
       text-align: center;
-      padding: 12px 16px;
+      padding: 12px 24px;
       font-size: 13px;
       letter-spacing: 0.05em;
       width: 100%;
       box-sizing: border-box;
+      line-height: 1.5;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .urgency-banner strong {
@@ -4114,27 +4119,55 @@
     // ===== Location パララックス効果 =====
     const locationHeroes = document.querySelectorAll('.location-hero-bg');
     const locationQuotes = document.querySelectorAll('.location-quote');
+    const locationContents = document.querySelectorAll('.location-content');
 
     function updateLocationParallax() {
+      const scrollY = window.scrollY;
+
+      // 背景画像: ゆっくり動く（0.3倍速度）
       locationHeroes.forEach(bg => {
-        const rect = bg.getBoundingClientRect();
+        const section = bg.closest('.location-section');
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
         if (rect.top < windowHeight && rect.bottom > 0) {
-          const scrolled = (windowHeight - rect.top) / (windowHeight + rect.height);
-          const yPos = (scrolled - 0.5) * 40; // -20px to +20px
-          bg.style.transform = `scale(1.1) translateY(${yPos}px)`;
+          // セクション中央からの相対位置を計算
+          const sectionCenter = rect.top + rect.height / 2;
+          const viewportCenter = windowHeight / 2;
+          const distance = sectionCenter - viewportCenter;
+          // パララックス係数を大きく（0.4 = 背景は40%の速度で動く）
+          const parallaxOffset = distance * 0.4;
+          bg.style.transform = `scale(1.15) translateY(${parallaxOffset}px)`;
         }
       });
 
+      // 引用テキスト: 逆方向に少し動く（-0.1倍速度）
       locationQuotes.forEach(quote => {
         const rect = quote.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
         if (rect.top < windowHeight && rect.bottom > 0) {
-          const scrolled = (windowHeight - rect.top) / (windowHeight + rect.height);
-          const yPos = (scrolled - 0.5) * 20;
-          quote.style.transform = `translateY(${yPos}px)`;
+          const quoteCenter = rect.top + rect.height / 2;
+          const viewportCenter = windowHeight / 2;
+          const distance = quoteCenter - viewportCenter;
+          // 逆パララックス（コンテンツより速く動く）
+          const parallaxOffset = distance * -0.15;
+          quote.style.transform = `translateY(${parallaxOffset}px)`;
+        }
+      });
+
+      // コンテンツ: 通常速度との間（0.1倍速度）
+      locationContents.forEach(content => {
+        const rect = content.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (rect.top < windowHeight && rect.bottom > 0) {
+          const contentCenter = rect.top + rect.height / 2;
+          const viewportCenter = windowHeight / 2;
+          const distance = contentCenter - viewportCenter;
+          const parallaxOffset = distance * 0.08;
+          content.style.transform = `translateY(${parallaxOffset}px)`;
         }
       });
     }
@@ -4584,19 +4617,15 @@
     // ===== ウェディング装飾要素アニメーション =====
     const weddingDecos = document.querySelectorAll('.wedding-deco');
 
-    const decoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // 少し遅延を入れて順番に表示
-          const delay = parseInt(entry.target.dataset.deco) * 150;
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, delay);
-        }
+    // ページ読み込み時に順番に表示
+    window.addEventListener('load', () => {
+      weddingDecos.forEach((deco, index) => {
+        const delay = index * 200 + 500; // 0.5秒後から0.2秒間隔で表示
+        setTimeout(() => {
+          deco.classList.add('visible');
+        }, delay);
       });
-    }, { threshold: 0, rootMargin: '100px' });
-
-    weddingDecos.forEach(deco => decoObserver.observe(deco));
+    });
 
     // スクロール時の視差効果
     let decoTicking = false;
