@@ -275,6 +275,64 @@
       }
     }
 
+    /* Decorative Keywords (あしらい) */
+    .deco-keyword {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    .deco-keyword.left {
+      left: -100px;
+      transform: translateX(-50px) rotate(-5deg);
+    }
+
+    .deco-keyword.right {
+      right: -100px;
+      transform: translateX(50px) rotate(5deg);
+    }
+
+    .deco-keyword.visible.left {
+      opacity: 0.08;
+      transform: translateX(0) rotate(-5deg);
+    }
+
+    .deco-keyword.visible.right {
+      opacity: 0.08;
+      transform: translateX(0) rotate(5deg);
+    }
+
+    .deco-keyword.theme-nature {
+      color: var(--komagane);
+    }
+
+    .deco-keyword.theme-sea {
+      color: var(--yokohama);
+    }
+
+    .deco-keyword.theme-love {
+      color: #d4a574;
+    }
+
+    @media (max-width: 768px) {
+      .deco-keyword {
+        font-size: clamp(32px, 8vw, 60px);
+      }
+      .deco-keyword.left {
+        left: -20px;
+      }
+      .deco-keyword.right {
+        right: -20px;
+      }
+    }
+
     /* Navigation */
     .nav {
       position: fixed;
@@ -2625,6 +2683,16 @@
     <div class="scroll-hint">SCROLL</div>
   </section>
 
+  <!-- Parallax Section after Hero -->
+  <section class="parallax-section" style="background-image: url('yokohama/40257.jpg');">
+    <div class="parallax-quote">
+      <p class="parallax-quote-text">
+        「ここで始まったんだよ」<br>
+        そう話せる一枚に。
+      </p>
+    </div>
+  </section>
+
   <!-- 実績カウンター -->
   <section class="stats">
     <div class="stats-grid">
@@ -2648,7 +2716,9 @@
   </section>
 
   <!-- Brand Story Section -->
-  <section class="section brand-story" id="brand">
+  <section class="section brand-story" id="brand" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-nature">Landscape</span>
+    <span class="deco-keyword right theme-sea">風</span>
     <div class="container">
       <div class="brand-mission">
         <p class="brand-mission-text">
@@ -3105,7 +3175,9 @@
   </section>
 
   <!-- お客様の声 -->
-  <section class="section testimonials">
+  <section class="section testimonials" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-love">Wedding</span>
+    <span class="deco-keyword right theme-nature">二人</span>
     <div class="container">
       <h2 class="section-title">先輩カップルの声</h2>
       <div class="testimonial-list">
@@ -3153,19 +3225,10 @@
     </div>
   </section>
 
-  <!-- Parallax Section 1 -->
-  <section class="parallax-section" style="background-image: url('yokohama/40257.jpg');">
-    <div class="parallax-quote">
-      <p class="parallax-quote-text">
-        「ここで始まったんだよ」<br>
-        そう話せる一枚に。
-      </p>
-      <p class="parallax-quote-location">— 横浜・みなとみらい</p>
-    </div>
-  </section>
-
   <!-- Pain Points Section -->
-  <section class="section painpoints">
+  <section class="section painpoints" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-nature">想い</span>
+    <span class="deco-keyword right theme-sea">場所</span>
     <div class="container">
       <h2 class="section-title">こんな風に思っていませんか？</h2>
       <div class="pain-list">
@@ -3233,7 +3296,9 @@
   </section>
 
   <!-- Services Section -->
-  <section class="section services" id="service">
+  <section class="section services" id="service" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-sea">Happy</span>
+    <span class="deco-keyword right theme-love">幸せ</span>
     <div class="container">
       <h2 class="section-title">サービス</h2>
       <div class="service-grid">
@@ -3300,19 +3365,10 @@
     </div>
   </section>
 
-  <!-- Parallax Section 2 -->
-  <section class="parallax-section" style="background-image: url('komagane/40277_0.jpg');">
-    <div class="parallax-quote">
-      <p class="parallax-quote-text">
-        山の空気、鳥の声、<br>
-        静寂の中で刻む時間。
-      </p>
-      <p class="parallax-quote-location">— 駒ヶ根・アルプスのふもと</p>
-    </div>
-  </section>
-
   <!-- Steps Section -->
-  <section class="section steps">
+  <section class="section steps" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-love">約束</span>
+    <span class="deco-keyword right theme-nature">始まり</span>
     <div class="container">
       <h2 class="section-title">フォトウェディングの流れ</h2>
       <div class="steps-list">
@@ -3468,7 +3524,9 @@
   </section>
 
   <!-- Contact Section -->
-  <section class="section contact" id="contact">
+  <section class="section contact" id="contact" style="position: relative; overflow: hidden;">
+    <span class="deco-keyword left theme-sea">Memory</span>
+    <span class="deco-keyword right theme-love">物語</span>
     <div class="container">
       <h2 class="section-title">お問い合わせ</h2>
       <p class="contact-intro">
@@ -3694,6 +3752,20 @@
 
     locationSections.forEach(section => {
       locationObserver.observe(section);
+    });
+
+    // Decorative Keywords - Scroll Animation
+    const decoKeywords = document.querySelectorAll('.deco-keyword');
+    const decoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-100px' });
+
+    decoKeywords.forEach(keyword => {
+      decoObserver.observe(keyword);
     });
 
     // Location Gallery - Horizontal Scroll Drag
