@@ -345,7 +345,8 @@
       font-weight: 400;
       color: var(--text);
       background: var(--secondary);
-      line-height: 1.8;
+      font-size: 14px;
+      line-height: 1.9;
       letter-spacing: 0.04em;
       overflow-x: hidden;
     }
@@ -357,7 +358,7 @@
 
     /* Utility */
     .section {
-      padding: 100px 24px;
+      padding: 80px 24px;
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 1s ease, transform 1s ease;
@@ -366,6 +367,20 @@
     .section.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* 重要セクション用の大きな余白 */
+    .section--breath {
+      padding: 120px 24px;
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        padding: 100px 40px;
+      }
+      .section--breath {
+        padding: 160px 40px;
+      }
     }
 
     .container {
@@ -510,11 +525,11 @@
 
     /* ===== ウェディング装飾要素（あしらい） ===== */
     .wedding-deco {
-      position: fixed;
+      position: absolute;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 1;
       opacity: 0;
-      transition: opacity 1.5s ease, transform 1.5s ease;
+      transition: opacity 2s ease;
     }
 
     .wedding-deco svg {
@@ -523,59 +538,23 @@
       fill: none;
     }
 
+    .wedding-deco.visible {
+      opacity: 0.07;
+    }
+
+    /* 左右配置 */
     .wedding-deco.from-left {
-      left: 30px;
-      transform: translateX(-200px) rotate(-8deg);
+      left: 3%;
     }
-
     .wedding-deco.from-right {
-      right: 30px;
-      transform: translateX(200px) rotate(8deg);
+      right: 3%;
     }
 
-    .wedding-deco.visible.from-left {
-      opacity: 0.35;
-      transform: translateX(0) rotate(-8deg);
-    }
-
-    .wedding-deco.visible.from-right {
-      opacity: 0.35;
-      transform: translateX(0) rotate(8deg);
-    }
-
-    /* テーマカラー */
+    /* テーマカラー（繊細に） */
     .wedding-deco.theme-yokohama svg { stroke: var(--yokohama); }
     .wedding-deco.theme-komagane svg { stroke: var(--komagane); }
     .wedding-deco.theme-gold svg { stroke: #c4a87c; }
     .wedding-deco.theme-rose svg { stroke: #d4a5a5; }
-
-    /* 浮遊アニメーション */
-    @keyframes floatSway {
-      0%, 100% { transform: translateY(0) rotate(var(--rotate-base, 0deg)); }
-      50% { transform: translateY(-15px) rotate(var(--rotate-base, 0deg)); }
-    }
-
-    @keyframes floatSwayReverse {
-      0%, 100% { transform: translateY(-10px) rotate(var(--rotate-base, 0deg)); }
-      50% { transform: translateY(5px) rotate(var(--rotate-base, 0deg)); }
-    }
-
-    @keyframes gentleSpin {
-      0%, 100% { transform: rotate(var(--rotate-base, 0deg)) scale(1); }
-      50% { transform: rotate(calc(var(--rotate-base, 0deg) + 3deg)) scale(1.02); }
-    }
-
-    .wedding-deco.visible {
-      animation: floatSway 6s ease-in-out infinite;
-    }
-
-    .wedding-deco.visible:nth-child(even) {
-      animation: floatSwayReverse 7s ease-in-out infinite;
-    }
-
-    .wedding-deco.visible:nth-child(3n) {
-      animation: gentleSpin 8s ease-in-out infinite;
-    }
 
     @media (max-width: 768px) {
       .wedding-deco { display: none; }
@@ -816,11 +795,11 @@
 
     .hero-copy {
       font-family: 'Noto Serif JP', serif;
-      font-size: clamp(20px, 6vw, 42px);
+      font-size: clamp(26px, 7vw, 56px);
       font-weight: 400;
       line-height: 1.6;
-      letter-spacing: 0.15em;
-      margin-bottom: 20px;
+      letter-spacing: 0.12em;
+      margin-bottom: 24px;
       opacity: 0;
       animation: fadeInUp 1.5s ease 0.5s forwards;
     }
@@ -2830,12 +2809,12 @@
 
     /* 緊急性・特典表示 */
     .urgency-banner {
-      position: fixed;
-      top: 44px;
+      position: sticky;
+      top: 0;
       background: linear-gradient(90deg, var(--yokohama-light), var(--yokohama));
       color: var(--white);
       text-align: center;
-      padding: 10px 24px;
+      padding: 12px 24px;
       font-size: 12px;
       letter-spacing: 0.05em;
       width: 100%;
@@ -2845,11 +2824,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 900;
     }
 
     .urgency-banner strong {
       font-weight: 500;
+    }
+
+    /* ナビゲーションがスクロール時にバナーの上に重なる */
+    .nav.scrolled {
+      z-index: 1000;
     }
 
     /* 信頼バッジ */
@@ -3071,9 +3055,9 @@
   </section>
 
   <!-- Brand Story Section with Parallax -->
-  <section class="section brand-story" id="brand" style="position: relative; overflow: hidden;">
-    <!-- パララックス背景 -->
-    <div class="brand-story-parallax" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('yokohama/40257.jpg'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.15; z-index: 0;"></div>
+  <section class="section section--breath brand-story" id="brand" style="position: relative; overflow: hidden;">
+    <!-- パララックス背景（控えめな視差効果） -->
+    <div class="brand-story-parallax" id="brandParallaxBg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('yokohama/40257.jpg'); background-size: cover; background-position: center; opacity: 0.12; z-index: 0; will-change: transform;"></div>
 
     <div class="container" style="position: relative; z-index: 2;">
       <div class="brand-mission">
@@ -4092,18 +4076,57 @@
       parallaxObserver.observe(conceptParallax);
     }
 
-    // Scroll-based parallax effect
-    function updateParallax() {
+    // ===== 控えめなパララックス効果 =====
+    // アクセシビリティ・モバイル対応
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
+    const enableParallax = !prefersReducedMotion && !isMobile;
+
+    // ブランドストーリー背景のパララックス
+    const brandParallaxBg = document.getElementById('brandParallaxBg');
+    let parallaxTicking = false;
+
+    function updateSubtleParallax() {
+      if (!enableParallax) return;
+
+      // ブランドストーリー背景
+      if (brandParallaxBg) {
+        const brandSection = document.getElementById('brand');
+        if (brandSection) {
+          const rect = brandSection.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+
+          if (rect.top < windowHeight && rect.bottom > 0) {
+            // 速度差0.03倍（非常に控えめ）
+            const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            const yOffset = (scrollProgress - 0.5) * 6; // -3% to +3%
+            brandParallaxBg.style.transform = `translateY(${yOffset}%)`;
+          }
+        }
+      }
+
+      // 既存のconcept parallax（控えめに調整）
       if (conceptParallaxBg && conceptParallax) {
         const rect = conceptParallax.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
         if (rect.top < windowHeight && rect.bottom > 0) {
           const scrolled = (windowHeight - rect.top) / (windowHeight + rect.height);
-          const yPos = scrolled * 30 - 15; // -15% to +15%
+          const yPos = (scrolled - 0.5) * 8; // -4% to +4%（従来の-15%〜+15%から大幅に低減）
           conceptParallaxBg.style.transform = `translateY(${yPos}%)`;
         }
       }
+
+      parallaxTicking = false;
+    }
+
+    if (enableParallax) {
+      window.addEventListener('scroll', () => {
+        if (!parallaxTicking) {
+          window.requestAnimationFrame(updateSubtleParallax);
+          parallaxTicking = true;
+        }
+      }, { passive: true });
     }
 
     // Location Sections - Visibility Observer
@@ -4560,36 +4583,17 @@
   </div>
 
   <script>
-    // ===== ウェディング装飾要素アニメーション =====
+    // ===== ウェディング装飾要素（あしらい） =====
+    // 繊細な装飾として静的に表示
     const weddingDecos = document.querySelectorAll('.wedding-deco');
 
-    // ページ読み込み時に順番に表示
     window.addEventListener('load', () => {
       weddingDecos.forEach((deco, index) => {
-        const delay = index * 200 + 500; // 0.5秒後から0.2秒間隔で表示
+        const delay = index * 300 + 800;
         setTimeout(() => {
           deco.classList.add('visible');
         }, delay);
       });
-    });
-
-    // スクロール時の視差効果
-    let decoTicking = false;
-    window.addEventListener('scroll', () => {
-      if (!decoTicking) {
-        window.requestAnimationFrame(() => {
-          weddingDecos.forEach(deco => {
-            if (deco.classList.contains('visible')) {
-              const rect = deco.getBoundingClientRect();
-              const scrollSpeed = 0.02;
-              const yOffset = window.scrollY * scrollSpeed * (parseInt(deco.dataset.deco) % 3 + 1);
-              deco.style.transform = `translateY(${-yOffset}px)`;
-            }
-          });
-          decoTicking = false;
-        });
-        decoTicking = true;
-      }
     });
   </script>
 
