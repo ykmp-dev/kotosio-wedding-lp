@@ -2858,16 +2858,6 @@
     <div class="scroll-hint">SCROLL</div>
   </section>
 
-  <!-- Parallax Section after Hero -->
-  <section class="parallax-section" style="background-image: url('yokohama/40257.jpg');">
-    <div class="parallax-quote">
-      <p class="parallax-quote-text">
-        「ここで始まったんだよ」<br>
-        そう話せる一枚に。
-      </p>
-    </div>
-  </section>
-
   <!-- 実績カウンター -->
   <section class="stats">
     <div class="stats-grid">
@@ -2890,11 +2880,24 @@
     </div>
   </section>
 
-  <!-- Brand Story Section -->
+  <!-- Brand Story Section with Parallax -->
   <section class="section brand-story" id="brand" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-nature">Landscape</span>
-    <span class="deco-keyword right theme-sea">風</span>
-    <div class="container">
+    <!-- パララックス背景 -->
+    <div class="brand-story-parallax" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('yokohama/40257.jpg'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.15; z-index: 0;"></div>
+
+    <!-- SVGあしらい素材: 山（左上） -->
+    <svg class="deco-svg deco-mountain-left" viewBox="0 0 100 80" style="position: absolute; top: 5%; left: 3%; width: 120px; height: auto; opacity: 0.12; z-index: 1;">
+      <path d="M5 70 L30 25 L45 50 L70 10 L95 70 Z" fill="none" stroke="var(--komagane)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 70 L40 40 L55 55 L75 30 L90 70" fill="none" stroke="var(--komagane)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+    </svg>
+
+    <!-- SVGあしらい素材: 波（右下） -->
+    <svg class="deco-svg deco-wave-right" viewBox="0 0 120 40" style="position: absolute; bottom: 8%; right: 5%; width: 150px; height: auto; opacity: 0.1; z-index: 1;">
+      <path d="M0 20 Q15 5 30 20 T60 20 T90 20 T120 20" fill="none" stroke="var(--yokohama)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M10 30 Q25 15 40 30 T70 30 T100 30" fill="none" stroke="var(--yokohama)" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    </svg>
+
+    <div class="container" style="position: relative; z-index: 2;">
       <div class="brand-mission">
         <p class="brand-mission-text">
           土地が語り、写真が遺し、<br>
@@ -3351,8 +3354,21 @@
 
   <!-- お客様の声 -->
   <section class="section testimonials" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-love">Wedding</span>
-    <span class="deco-keyword right theme-nature">二人</span>
+    <!-- SVGあしらい素材: ブーケ（左上） -->
+    <svg class="deco-svg deco-bouquet-left" viewBox="0 0 80 100" style="position: absolute; top: 8%; left: 4%; width: 80px; height: auto; opacity: 0.1; z-index: 1;">
+      <ellipse cx="40" cy="35" rx="25" ry="20" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <ellipse cx="30" cy="40" rx="18" ry="15" fill="none" stroke="var(--yokohama)" stroke-width="1" opacity="0.7"/>
+      <ellipse cx="50" cy="40" rx="18" ry="15" fill="none" stroke="var(--yokohama)" stroke-width="1" opacity="0.7"/>
+      <path d="M35 55 Q40 75 40 95" fill="none" stroke="var(--komagane)" stroke-width="1.5"/>
+      <path d="M40 55 Q42 70 45 85" fill="none" stroke="var(--komagane)" stroke-width="1" opacity="0.6"/>
+      <path d="M45 55 Q38 72 35 90" fill="none" stroke="var(--komagane)" stroke-width="1" opacity="0.6"/>
+    </svg>
+    <!-- SVGあしらい素材: 指輪（右下） -->
+    <svg class="deco-svg deco-ring-right" viewBox="0 0 60 60" style="position: absolute; bottom: 10%; right: 6%; width: 60px; height: auto; opacity: 0.08; z-index: 1;">
+      <circle cx="30" cy="30" r="20" fill="none" stroke="var(--yokohama)" stroke-width="2"/>
+      <circle cx="30" cy="30" r="12" fill="none" stroke="var(--yokohama)" stroke-width="1" opacity="0.6"/>
+      <circle cx="30" cy="15" r="3" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+    </svg>
     <div class="container">
       <h2 class="section-title">先輩カップルの声</h2>
       <div class="testimonial-list">
@@ -3402,8 +3418,19 @@
 
   <!-- Pain Points Section -->
   <section class="section painpoints" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-nature">想い</span>
-    <span class="deco-keyword right theme-sea">場所</span>
+    <!-- SVGあしらい素材: ハート（左上） -->
+    <svg class="deco-svg deco-heart-left" viewBox="0 0 60 60" style="position: absolute; top: 6%; left: 5%; width: 60px; height: auto; opacity: 0.1; z-index: 1;">
+      <path d="M30 50 C15 35 5 25 5 15 C5 5 15 5 30 18 C45 5 55 5 55 15 C55 25 45 35 30 50Z" fill="none" stroke="var(--komagane)" stroke-width="1.5"/>
+    </svg>
+    <!-- SVGあしらい素材: 都市風景（右下） -->
+    <svg class="deco-svg deco-city-right" viewBox="0 0 100 60" style="position: absolute; bottom: 8%; right: 4%; width: 120px; height: auto; opacity: 0.08; z-index: 1;">
+      <rect x="10" y="30" width="15" height="30" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <rect x="28" y="20" width="12" height="40" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <rect x="43" y="10" width="18" height="50" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <rect x="64" y="25" width="14" height="35" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <rect x="81" y="35" width="12" height="25" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="0" y1="60" x2="100" y2="60" stroke="var(--yokohama)" stroke-width="1" opacity="0.5"/>
+    </svg>
     <div class="container">
       <h2 class="section-title">こんな風に思っていませんか？</h2>
       <div class="pain-list">
@@ -3472,8 +3499,23 @@
 
   <!-- Services Section -->
   <section class="section services" id="service" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-sea">Happy</span>
-    <span class="deco-keyword right theme-love">幸せ</span>
+    <!-- SVGあしらい素材: 太陽（左上） -->
+    <svg class="deco-svg deco-sun-left" viewBox="0 0 60 60" style="position: absolute; top: 5%; left: 4%; width: 70px; height: auto; opacity: 0.1; z-index: 1;">
+      <circle cx="30" cy="30" r="12" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="30" y1="5" x2="30" y2="12" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="30" y1="48" x2="30" y2="55" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="5" y1="30" x2="12" y2="30" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="48" y1="30" x2="55" y2="30" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="12" y1="12" x2="17" y2="17" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="43" y1="43" x2="48" y2="48" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="48" y1="12" x2="43" y2="17" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <line x1="17" y1="43" x2="12" y2="48" stroke="var(--yokohama)" stroke-width="1.5"/>
+    </svg>
+    <!-- SVGあしらい素材: 鳥（右下） -->
+    <svg class="deco-svg deco-bird-right" viewBox="0 0 80 40" style="position: absolute; bottom: 10%; right: 5%; width: 100px; height: auto; opacity: 0.08; z-index: 1;">
+      <path d="M10 25 Q20 15 35 20 Q45 10 55 18" fill="none" stroke="var(--komagane)" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M40 30 Q50 20 60 25 Q68 18 75 22" fill="none" stroke="var(--komagane)" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+    </svg>
     <div class="container">
       <h2 class="section-title">サービス</h2>
       <div class="service-grid">
@@ -3542,8 +3584,18 @@
 
   <!-- Steps Section -->
   <section class="section steps" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-love">約束</span>
-    <span class="deco-keyword right theme-nature">始まり</span>
+    <!-- SVGあしらい素材: 結び目（左上） -->
+    <svg class="deco-svg deco-knot-left" viewBox="0 0 60 60" style="position: absolute; top: 8%; left: 5%; width: 60px; height: auto; opacity: 0.1; z-index: 1;">
+      <path d="M10 20 Q20 10 30 20 Q40 30 50 20" fill="none" stroke="var(--yokohama)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M10 40 Q20 30 30 40 Q40 50 50 40" fill="none" stroke="var(--komagane)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="30" cy="30" r="8" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+    </svg>
+    <!-- SVGあしらい素材: 道（右下） -->
+    <svg class="deco-svg deco-path-right" viewBox="0 0 80 60" style="position: absolute; bottom: 8%; right: 5%; width: 90px; height: auto; opacity: 0.08; z-index: 1;">
+      <path d="M5 55 Q25 40 40 45 Q55 50 75 30" fill="none" stroke="var(--komagane)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3"/>
+      <circle cx="5" cy="55" r="3" fill="var(--komagane)" opacity="0.5"/>
+      <circle cx="75" cy="30" r="3" fill="var(--komagane)" opacity="0.5"/>
+    </svg>
     <div class="container">
       <h2 class="section-title">フォトウェディングの流れ</h2>
       <div class="steps-list">
@@ -3700,8 +3752,22 @@
 
   <!-- Contact Section -->
   <section class="section contact" id="contact" style="position: relative; overflow: hidden;">
-    <span class="deco-keyword left theme-sea">Memory</span>
-    <span class="deco-keyword right theme-love">物語</span>
+    <!-- SVGあしらい素材: カメラ（左上） -->
+    <svg class="deco-svg deco-camera-left" viewBox="0 0 80 60" style="position: absolute; top: 6%; left: 4%; width: 80px; height: auto; opacity: 0.1; z-index: 1;">
+      <rect x="10" y="15" width="60" height="40" rx="5" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <circle cx="40" cy="35" r="12" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+      <circle cx="40" cy="35" r="6" fill="none" stroke="var(--yokohama)" stroke-width="1"/>
+      <rect x="30" y="8" width="20" height="10" rx="2" fill="none" stroke="var(--yokohama)" stroke-width="1.5"/>
+    </svg>
+    <!-- SVGあしらい素材: 本（右下） -->
+    <svg class="deco-svg deco-book-right" viewBox="0 0 70 60" style="position: absolute; bottom: 8%; right: 5%; width: 70px; height: auto; opacity: 0.08; z-index: 1;">
+      <path d="M35 5 L35 55" stroke="var(--komagane)" stroke-width="1.5"/>
+      <path d="M10 10 Q35 5 35 10 L35 50 Q35 55 10 50 Z" fill="none" stroke="var(--komagane)" stroke-width="1.5"/>
+      <path d="M60 10 Q35 5 35 10 L35 50 Q35 55 60 50 Z" fill="none" stroke="var(--komagane)" stroke-width="1.5"/>
+      <line x1="15" y1="20" x2="30" y2="18" stroke="var(--komagane)" stroke-width="1" opacity="0.5"/>
+      <line x1="15" y1="28" x2="30" y2="26" stroke="var(--komagane)" stroke-width="1" opacity="0.5"/>
+      <line x1="15" y1="36" x2="30" y2="34" stroke="var(--komagane)" stroke-width="1" opacity="0.5"/>
+    </svg>
     <div class="container">
       <h2 class="section-title">お問い合わせ</h2>
       <p class="contact-intro">
