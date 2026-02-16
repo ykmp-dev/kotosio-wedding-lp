@@ -125,6 +125,181 @@
     ]
   }
   </script>
+
+  <!-- LLMO/AIO対策: Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KOTOSIO",
+    "alternateName": "ことしおウエディング",
+    "url": "https://kotosio.com",
+    "logo": "https://kotosio.com/logo.svg",
+    "description": "湘南・横浜・駒ヶ根・豊橋で「ただいま」と言える場所で、家族が生まれるフォトウエディング。土地が語り、写真が遺し、人生の「ことしお」になる結婚式をプロデュース。",
+    "slogan": "ただいま、と言える場所で、家族が生まれる。",
+    "foundingDate": "2004",
+    "founder": {
+      "@type": "Person",
+      "name": "鈴木正憲",
+      "jobTitle": "代表"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "JP",
+      "addressRegion": "神奈川県・長野県・愛知県"
+    },
+    "areaServed": [
+      {
+        "@type": "AdministrativeArea",
+        "name": "神奈川県",
+        "containsPlace": [
+          {"@type": "Place", "name": "湘南"},
+          {"@type": "Place", "name": "横浜"}
+        ]
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "長野県",
+        "containsPlace": [{"@type": "Place", "name": "駒ヶ根"}]
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "愛知県",
+        "containsPlace": [{"@type": "Place", "name": "豊橋"}]
+      }
+    ],
+    "knowsAbout": [
+      "フォトウエディング",
+      "ロケーション撮影",
+      "結婚式",
+      "ブライダルフォト",
+      "家族写真",
+      "前撮り",
+      "婚后撮影"
+    ],
+    "sameAs": []
+  }
+  </script>
+
+  <!-- LLMO/AIO対策: Service Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "フォトウエディング・ロケーション撮影",
+    "provider": {
+      "@type": "Organization",
+      "name": "KOTOSIO"
+    },
+    "areaServed": [
+      {"@type": "Place", "name": "湘南"},
+      {"@type": "Place", "name": "横浜"},
+      {"@type": "Place", "name": "駒ヶ根"},
+      {"@type": "Place", "name": "豊橋"}
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "KOTOSIOサービス一覧",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "フォトウエディング",
+            "description": "写真のみの撮影プラン。ドレス・タキシード込み。"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "JPY",
+            "price": "200000",
+            "priceRange": "¥200,000〜"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "写真＋小さな式",
+            "description": "撮影＋少人数での挙式・パーティ"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "JPY",
+            "price": "400000",
+            "priceRange": "¥400,000〜"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "家族旅ウエディング",
+            "description": "宿泊・食事・撮影・地域体験をセットにした家族参加型プラン"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "JPY",
+            "price": "1000000",
+            "priceRange": "¥1,000,000〜"
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- LLMO/AIO対策: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://kotosio.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "サービス",
+        "item": "https://kotosio.com/#service"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "お問い合わせ",
+        "item": "https://kotosio.com/#contact"
+      }
+    ]
+  }
+  </script>
+
+  <!-- LLMO/AIO対策: 追加メタデータ -->
+  <meta name="author" content="KOTOSIO">
+  <meta name="geo.region" content="JP-14, JP-20, JP-23">
+  <meta name="geo.placename" content="湘南, 横浜, 駒ヶ根, 豊橋">
+  <meta name="rating" content="general">
+  <meta name="distribution" content="global">
+  <meta name="revisit-after" content="7 days">
+  <link rel="author" href="https://kotosio.com/">
+  <link rel="publisher" href="https://kotosio.com/">
+
+  <!-- AI Search Optimization -->
+  <meta property="article:publisher" content="https://kotosio.com/">
+  <meta property="article:author" content="鈴木正憲">
+  <meta property="article:published_time" content="2024-01-01T00:00:00+09:00">
+  <meta property="article:modified_time" content="2025-02-16T00:00:00+09:00">
+  <meta property="article:section" content="ウェディングサービス">
+  <meta property="article:tag" content="フォトウエディング">
+  <meta property="article:tag" content="ロケーション撮影">
+  <meta property="article:tag" content="結婚式">
+  <meta property="article:tag" content="湘南">
+  <meta property="article:tag" content="横浜">
+  <meta property="article:tag" content="駒ヶ根">
+  <meta property="article:tag" content="豊橋">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
