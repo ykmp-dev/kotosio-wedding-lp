@@ -2586,6 +2586,75 @@
       letter-spacing: 0.1em;
     }
 
+    /* Instagram Section */
+    .instagram-section {
+      background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+    }
+
+    .instagram-section .section-title {
+      color: var(--primary);
+    }
+
+    .instagram-intro {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-light);
+      margin-top: -40px;
+      margin-bottom: 50px;
+    }
+
+    .instagram-feed {
+      margin-bottom: 40px;
+    }
+
+    .instagram-placeholder {
+      text-align: center;
+      padding: 60px 24px;
+      background: rgba(91, 163, 184, 0.05);
+      border-radius: 12px;
+      border: 2px dashed rgba(91, 163, 184, 0.3);
+    }
+
+    .instagram-placeholder p {
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .instagram-placeholder-link {
+      color: var(--yokohama);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .instagram-placeholder-link:hover {
+      text-decoration: underline;
+    }
+
+    .instagram-cta {
+      text-align: center;
+    }
+
+    .instagram-follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: var(--transition-soft);
+    }
+
+    .instagram-follow-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(131, 58, 180, 0.3);
+    }
+
     /* お客様の声 */
     .testimonials {
       background: var(--white);
@@ -3655,6 +3724,32 @@
       <p class="location-quote-text">
         「商店街の温もりが、<br>二人を包み込む。」
       </p>
+    </div>
+  </section>
+
+  <!-- Instagram Section -->
+  <section class="section instagram-section" id="instagram">
+    <div class="container">
+      <h2 class="section-title">Instagram</h2>
+      <p class="instagram-intro">@kotosio_wedding の最新撮影をチェック</p>
+
+      <!-- Lightwidget コードをここに貼り付け -->
+      <div class="instagram-feed">
+        <!-- プレースホルダー: Lightwidgetコードと差し替え -->
+        <div class="instagram-placeholder">
+          <p>Instagramフィードを表示するには、Lightwidgetでコードを取得してください。</p>
+          <a href="https://lightwidget.com" target="_blank" class="instagram-placeholder-link">Lightwidgetで設定 →</a>
+        </div>
+      </div>
+
+      <div class="instagram-cta">
+        <a href="https://www.instagram.com/kotosio_wedding/" target="_blank" class="instagram-follow-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          フォローする
+        </a>
+      </div>
     </div>
   </section>
 
