@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Updated: 2025-02-17 - Carousel for all locations, deco, mobile CTA fix -->
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -416,124 +417,109 @@
       margin: 20px auto 0;
     }
 
-    /* Parallax Background Sections */
-    .parallax-section {
-      position: relative;
-      height: 60vh;
-      min-height: 400px;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+    /* ============================================
+       前景装飾コンポーネント（あしらい）
+       - スクロールで段階的に情報を提示するコンテンツ演出
+       - デフォルトは静的、no-preference時のみアニメON
+       - 1回発火→最終状態保持（再演出なし）
+       ============================================ */
+
+    /* 1) セクションタイトル装飾：タグ + ライン */
+    .section-title-deco {
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .parallax-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(245, 240, 235, 0.3) 0%,
-        rgba(42, 74, 82, 0.4) 50%,
-        rgba(245, 240, 235, 0.3) 100%
-      );
-    }
-
-    .parallax-quote {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 0 24px;
-    }
-
-    .parallax-quote-text {
-      font-family: 'Noto Serif JP', serif;
-      font-size: clamp(18px, 4vw, 28px);
-      font-weight: 400;
-      color: #fff;
-      letter-spacing: 0.15em;
-      line-height: 2;
-      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .parallax-quote-location {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 0.2em;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .parallax-section {
-        background-attachment: scroll;
-        height: 50vh;
-        min-height: 300px;
-      }
-    }
-
-    /* Decorative Keywords (あしらい) */
-    .deco-keyword {
-      position: absolute;
-      font-family: 'Noto Serif JP', serif;
-      font-size: clamp(48px, 10vw, 120px);
-      font-weight: 300;
-      letter-spacing: 0.1em;
+      gap: 16px;
+      margin-bottom: 24px;
       opacity: 0;
-      transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      pointer-events: none;
-      z-index: 1;
-      white-space: nowrap;
     }
 
-    .deco-keyword.left {
-      left: -100px;
-      transform: translateX(-50px) rotate(-5deg);
+    .section-title-deco.visible {
+      opacity: 1;
     }
 
-    .deco-keyword.right {
-      right: -100px;
-      transform: translateX(50px) rotate(5deg);
+    .section-title-deco__tag {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--primary);
+      padding: 8px 20px;
+      border: 1px solid var(--primary);
+      opacity: 1;
+      text-transform: uppercase;
     }
 
-    .deco-keyword.visible.left {
-      opacity: 0.08;
-      transform: translateX(0) rotate(-5deg);
+    .section-title-deco__line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--text-light), transparent);
+      opacity: 0.3;
     }
 
-    .deco-keyword.visible.right {
-      opacity: 0.08;
-      transform: translateX(0) rotate(5deg);
+    /* 2) 引用装飾：引用符 + フェードイン */
+    .quote-deco {
+      position: relative;
+      padding-left: 24px;
+      opacity: 0;
     }
 
-    .deco-keyword.theme-nature {
-      color: var(--komagane);
+    .quote-deco.visible {
+      opacity: 1;
     }
 
-    .deco-keyword.theme-sea {
-      color: var(--yokohama);
+    .quote-deco::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -12px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--yokohama-light);
+      opacity: 0.3;
     }
 
-    .deco-keyword.theme-love {
-      color: #d4a574;
+    .quote-deco--komagane::before {
+      color: var(--komagane-light);
     }
 
-    @media (max-width: 768px) {
-      .deco-keyword {
-        font-size: clamp(32px, 8vw, 60px);
+    /* Reduced Motion対応：デフォルトは静的（常に表示） */
+    @media (prefers-reduced-motion: reduce) {
+      .section-title-deco,
+      .quote-deco {
+        opacity: 1;
+        transition: none;
       }
-      .deco-keyword.left {
-        left: -20px;
+    }
+
+    /* アニメーション有効時のみ */
+    @media (prefers-reduced-motion: no-preference) {
+      .section-title-deco {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
       }
-      .deco-keyword.right {
-        right: -20px;
+
+      .section-title-deco.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .quote-deco {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .quote-deco.visible {
+        opacity: 1;
+        transform: translateX(0);
       }
     }
 
-    /* ===== ウェディング装飾要素（あしらい） ===== */
+    /* ============================================
+       ウェディング装飾要素（あしらい）- 既存
+       ============================================ */
     .wedding-deco {
       position: absolute;
       pointer-events: none;
@@ -552,15 +538,9 @@
       opacity: 0.18;
     }
 
-    /* 左右配置 */
-    .wedding-deco.from-left {
-      left: 3%;
-    }
-    .wedding-deco.from-right {
-      right: 3%;
-    }
+    .wedding-deco.from-left { left: 3%; }
+    .wedding-deco.from-right { right: 3%; }
 
-    /* テーマカラー（繊細に） */
     .wedding-deco.theme-yokohama svg { stroke: var(--yokohama); }
     .wedding-deco.theme-komagane svg { stroke: var(--komagane); }
     .wedding-deco.theme-gold svg { stroke: #c4a87c; }
@@ -583,30 +563,14 @@
       transition: var(--transition);
     }
 
-    /* モバイルではnavをバナーの下に配置 */
-    @media (max-width: 767px) {
-      .nav {
-        top: 44px;
-        z-index: 950;
-      }
-      .nav.scrolled {
-        z-index: 950;
-      }
-      .hamburger span {
-        background: var(--primary);
-      }
-      .nav:not(.scrolled) .hamburger span {
-        background: var(--white);
-      }
+    /* ナビは常にバナーの上（PC・モバイル共通） */
+    .nav {
+      z-index: 1000;
     }
 
-    /* PCではnavがバナーの上 */
-    @media (min-width: 768px) {
-      .nav {
-        z-index: 1000;
-      }
-      .nav.scrolled {
-        z-index: 1000;
+    @media (max-width: 767px) {
+      .hamburger span {
+        background: #1a1a1a;
       }
     }
 
@@ -790,6 +754,40 @@
       background: var(--yokohama);
     }
 
+    /* モバイルメニュー閉じるボタン */
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s, background 0.3s;
+    }
+
+    .mobile-menu-close svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .mobile-menu.active .mobile-menu-close {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .mobile-menu-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     /* Hero Section */
     .hero {
       height: 100vh;
@@ -812,7 +810,7 @@
         rgba(26, 26, 26, 0.3) 0%,
         rgba(26, 26, 26, 0.6) 100%
       ),
-      url('yokohama/40257.jpg') center/cover no-repeat;
+      url('images/komagane/mountain/B48R1939.jpg') center/cover no-repeat;
       transform: scale(1.1);
       animation: heroZoom 20s ease infinite alternate;
     }
@@ -959,75 +957,6 @@
         rgba(0, 0, 0, 0.1) 0%,
         rgba(0, 0, 0, 0.3) 100%
       );
-    }
-
-    /* Full-width Parallax Text Section */
-    .concept-parallax {
-      position: relative;
-      height: 80vh;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .concept-parallax-bg {
-      position: absolute;
-      top: -20%;
-      left: 0;
-      width: 100%;
-      height: 140%;
-      background-size: cover;
-      background-position: center;
-      will-change: transform;
-    }
-
-    .concept-parallax-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(26, 26, 26, 0.5);
-    }
-
-    .concept-parallax-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: var(--white);
-      padding: 0 24px;
-    }
-
-    .concept-parallax-title {
-      font-family: 'Noto Serif JP', serif;
-      font-size: clamp(24px, 6vw, 48px);
-      font-weight: 400;
-      line-height: 1.6;
-      letter-spacing: 0.15em;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    .concept-parallax.visible .concept-parallax-title {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .concept-parallax-text {
-      font-size: clamp(13px, 2vw, 16px);
-      letter-spacing: 0.2em;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
-    }
-
-    .concept-parallax.visible .concept-parallax-text {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* Concept Feature Blocks */
@@ -1177,6 +1106,76 @@
       transform: scale(1);
     }
 
+    /* Hero Carousel for Yokohama */
+    .hero-carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .hero-carousel-slides {
+      display: flex;
+      width: 500%;
+      height: 100%;
+      animation: carouselSlide 25s ease-in-out infinite;
+    }
+
+    .hero-carousel-slide {
+      flex: 0 0 20%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+
+    .hero-carousel-slide.active {
+      transform: scale(1);
+    }
+
+    @keyframes carouselSlide {
+      0%, 15% { transform: translateX(0); }
+      20%, 35% { transform: translateX(-20%); }
+      40%, 55% { transform: translateX(-40%); }
+      60%, 75% { transform: translateX(-60%); }
+      80%, 95% { transform: translateX(-80%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Carousel Dots */
+    .carousel-dots {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+      .carousel-dots {
+        bottom: 80px;
+      }
+    }
+
     .location-hero-overlay {
       position: absolute;
       top: 0;
@@ -1243,7 +1242,7 @@
     }
 
     .location-content-inner {
-      max-width: 1100px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -1254,70 +1253,130 @@
 
     @media (min-width: 768px) {
       .location-description {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1.4fr;
         gap: 80px;
       }
     }
 
+    @media (min-width: 1024px) {
+      .location-description {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    /* Center layout for location section */
+    @media (min-width: 1024px) {
+      .location-text-column {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+      }
+      .section-title-deco {
+        justify-content: center;
+      }
+      .section-title-deco__line {
+        display: none;
+      }
+      .location-story,
+      .location-story-text {
+        max-width: none;
+      }
+      .location-features {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 40px !important;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .location-feature-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border-bottom: none;
+        padding: 0;
+      }
+      .location-feature-icon {
+        margin-bottom: 16px;
+      }
+    }
+
+    .location-text-column {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
     .location-story {
       font-family: 'Noto Serif JP', serif;
+      max-width: 500px;
     }
 
     .location-story-title {
-      font-size: clamp(18px, 3vw, 24px);
-      font-weight: 500;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
       color: var(--primary);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       line-height: 1.6;
+      letter-spacing: 0.05em;
     }
 
     .location-story-text {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 14px;
-      line-height: 2.4;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
+      line-height: 2.2;
       color: var(--text-light);
+      max-width: 420px;
+      font-weight: 300;
     }
 
     .location-features {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
     }
 
     .location-feature-item {
       display: flex;
       align-items: flex-start;
-      gap: 16px;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .location-feature-item:last-child {
+      border-bottom: none;
     }
 
     .location-feature-icon {
-      width: 40px;
-      height: 40px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       background: var(--secondary);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: var(--yokohama);
+      color: var(--accent);
     }
 
     .location-feature-icon svg {
-      width: 18px;
-      height: 18px;
+      width: 26px;
+      height: 26px;
     }
 
     .location-feature-text h4 {
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
     }
 
     .location-feature-text p {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-light);
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
     /* Location Gallery */
@@ -1356,8 +1415,8 @@
 
     .location-gallery-item {
       flex: 0 0 auto;
-      width: 320px;
-      aspect-ratio: 4/3;
+      width: 340px;
+      aspect-ratio: 3/2;
       border-radius: 4px;
       overflow: hidden;
       position: relative;
@@ -1365,7 +1424,13 @@
 
     @media (min-width: 768px) {
       .location-gallery-item {
-        width: 380px;
+        width: 450px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .location-gallery-item {
+        width: 520px;
       }
     }
 
@@ -1421,15 +1486,17 @@
 
     .location-quote-text {
       font-family: 'Noto Serif JP', serif;
-      font-size: clamp(18px, 3vw, 26px);
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 400;
       background: linear-gradient(135deg, var(--yokohama) 0%, var(--komagane) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 2;
-      max-width: 700px;
+      max-width: 600px;
       margin: 0 auto;
       opacity: 0.9;
+      letter-spacing: 0.08em;
     }
 
     /* Location Navigation Dots */
@@ -2250,13 +2317,13 @@
     .credo {
       margin-top: 80px;
       padding: 60px 40px;
-      background: rgba(91, 163, 184, 0.08);
+      background: rgba(91, 163, 184, 0.18);
       border-radius: 12px;
     }
 
     .credo-title {
       font-family: 'Noto Serif JP', serif;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 500;
       text-align: center;
       margin-bottom: 40px;
@@ -2266,19 +2333,19 @@
 
     .credo-list {
       display: grid;
-      gap: 20px;
-      max-width: 560px;
+      gap: 24px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
     .credo-item {
-      font-size: 14px;
-      line-height: 1.8;
+      font-size: 16px;
+      line-height: 1.9;
       text-align: center;
       color: var(--text);
-      letter-spacing: 0.03em;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      letter-spacing: 0.05em;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .credo-item:last-child {
@@ -2543,43 +2610,101 @@
       transform: translateY(0);
     }
 
-    /* 実績カウンター */
-    .stats {
-      background: var(--yokohama);
-      padding: 80px 24px;
+    /* 実績カウンター（ビジュアル強化版） */
+    .stats-visual {
+      background: var(--white);
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px 30px;
-      max-width: 800px;
+    .stats-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(91, 163, 184, 0.03) 0%, rgba(139, 175, 122, 0.03) 100%);
+      pointer-events: none;
+    }
+
+    .stats-visual-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     @media (min-width: 768px) {
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px;
+      .stats-visual-inner {
+        flex-direction: row;
+        justify-content: center;
+        gap: 0;
       }
     }
 
-    .stat-item {
+    .stats-visual-item {
       text-align: center;
-      color: var(--white);
+      padding: 0 20px;
+      flex: 1;
+      max-width: 280px;
     }
 
-    .stat-number {
+    .stats-visual-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 20px;
+      color: var(--yokohama-light);
+      opacity: 0.6;
+    }
+
+    .stats-visual-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .stats-visual-number {
       font-family: 'Noto Serif JP', serif;
-      font-size: 42px;
-      font-weight: 500;
-      margin-bottom: 8px;
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
     }
 
-    .stat-label {
-      font-size: 13px;
-      opacity: 0.9;
-      letter-spacing: 0.05em;
+    .stats-visual-unit {
+      font-size: 0.4em;
+      vertical-align: super;
+      margin-left: 4px;
+      opacity: 0.7;
+    }
+
+    .stats-visual-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    .stats-visual-divider {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .stats-visual-divider {
+        display: block;
+        width: 1px;
+        height: 120px;
+        background: linear-gradient(180deg, transparent, var(--yokohama-light), transparent);
+        opacity: 0.3;
+      }
     }
       font-size: 12px;
       opacity: 0.7;
@@ -3010,25 +3135,22 @@
       background: linear-gradient(90deg, var(--yokohama-light), var(--yokohama));
       color: var(--white);
       text-align: center;
-      padding: 12px 24px;
+      padding: 20px 24px;
       font-size: 12px;
       letter-spacing: 0.05em;
       width: 100%;
       box-sizing: border-box;
       line-height: 1.5;
-      min-height: 44px;
+      min-height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 900;
     }
 
-    /* PCではnavがバナーの上 */
     @media (min-width: 768px) {
       .urgency-banner {
-        z-index: 900;
         padding: 24px;
-        min-height: 88px;
       }
     }
 
@@ -3214,6 +3336,12 @@
 
   <!-- モバイルメニュー -->
   <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="メニューを閉じる">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
     <div class="mobile-menu-links">
       <a href="#brand" class="mobile-menu-link">想い</a>
       <a href="#region" class="mobile-menu-link">地域</a>
@@ -3236,32 +3364,67 @@
     <div class="scroll-hint">SCROLL</div>
   </section>
 
-  <!-- 実績カウンター -->
-  <section class="stats">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-number">500+</div>
-        <div class="stat-label">撮影実績</div>
+  <!-- 実績カウンター（ビジュアル強化版） -->
+  <section class="stats-visual">
+    <div class="stats-visual-inner">
+      <div class="stats-visual-item">
+        <div class="stats-visual-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="24" cy="24" r="20"/>
+            <path d="M24 14v10l6 6"/>
+          </svg>
+        </div>
+        <div class="stats-visual-number">20<span class="stats-visual-unit">年</span></div>
+        <div class="stats-visual-label">この場所で<br>積み重ねた時間</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">98%</div>
-        <div class="stat-label">ご満足度</div>
+      <div class="stats-visual-divider"></div>
+      <div class="stats-visual-item">
+        <div class="stats-visual-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M24 4l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z"/>
+          </svg>
+        </div>
+        <div class="stats-visual-number">1000<span class="stats-visual-unit">組</span></div>
+        <div class="stats-visual-label">二人の<br>スタートに立ち会って</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">4</div>
-        <div class="stat-label">展開エリア</div>
+      <div class="stats-visual-divider"></div>
+      <div class="stats-visual-item">
+        <div class="stats-visual-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 40V20l16-12 16 12v20H8z"/>
+            <path d="M18 40V28h12v12"/>
+          </svg>
+        </div>
+        <div class="stats-visual-number">4<span class="stats-visual-unit">拠点</span></div>
+        <div class="stats-visual-label">湘南・横浜<br>駒ヶ根・豊橋</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">20年</div>
-        <div class="stat-label">実績・経験</div>
+      <div class="stats-visual-divider"></div>
+      <div class="stats-visual-item">
+        <div class="stats-visual-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M24 44c11 0 20-9 20-20S35 4 24 4 4 13 4 24s9 20 20 20z"/>
+            <path d="M16 24l6 6 10-12"/>
+          </svg>
+        </div>
+        <div class="stats-visual-number">98<span class="stats-visual-unit">%</span></div>
+        <div class="stats-visual-label">ご満足度<br>「選んでよかった」</div>
       </div>
     </div>
   </section>
 
-  <!-- Brand Story Section with Parallax -->
+  <!--
+    ============================================
+    Brand Story Section
+    ============================================
+    【パララックス役割】
+    - スクロール時の視差で「ブランド理念の深まり」を表現
+    - 背景画像は「場所（横浜）」の文脈を補強
+    - 【Reduced Motion対応】動き無効時は静的背景として機能、情報欠損なし
+    ============================================
+  -->
   <section class="section section--breath brand-story" id="brand" style="position: relative; overflow: hidden;">
-    <!-- パララックス背景（控えめな視差効果） -->
-    <div class="brand-story-parallax" id="brandParallaxBg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('yokohama/40257.jpg'); background-size: cover; background-position: center; opacity: 0.12; z-index: 0; will-change: transform;"></div>
+    <!-- 【パララックス背景】役割: 場所の文脈補強 / 情報: 画像のみ（装飾） -->
+    <div class="brand-story-parallax" id="brandParallaxBg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('images/yokohama/B48R5226.jpg'); background-size: cover; background-position: center; opacity: 0.12; z-index: 0; will-change: transform;"></div>
 
     <div class="container" style="position: relative; z-index: 2;">
       <div class="brand-mission">
@@ -3326,29 +3489,51 @@
   <!-- Location Showcase: 横浜 -->
   <section class="location-section" id="location-yokohama" data-location="yokohama">
     <div class="location-hero">
-      <div class="location-hero-bg" style="background-image: url('yokohama/40257.jpg');"></div>
+      <!-- カルーセル背景（5枚の画像） -->
+      <div class="hero-carousel">
+        <div class="hero-carousel-slides" id="yokohamaCarousel">
+          <div class="hero-carousel-slide active" style="background-image: url('images/yokohama/B48R5226.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/yokohama/B48R5331.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/yokohama/B48R5183.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/yokohama/B48R5253.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/yokohama/B48R5197.jpg');"></div>
+        </div>
+        <!-- カルーセルドット -->
+        <div class="carousel-dots" id="yokohamaCarouselDots">
+          <span class="carousel-dot active" data-index="0"></span>
+          <span class="carousel-dot" data-index="1"></span>
+          <span class="carousel-dot" data-index="2"></span>
+          <span class="carousel-dot" data-index="3"></span>
+          <span class="carousel-dot" data-index="4"></span>
+        </div>
+      </div>
       <div class="location-hero-overlay"></div>
       <div class="location-hero-content">
         <p class="location-number">LOCATION 01</p>
         <h2 class="location-name">横浜</h2>
-        <p class="location-tagline">港と夜景、二人で歩いた時間</p>
+        <p class="location-tagline">港と光、二人で歩いた時間</p>
       </div>
     </div>
     <div class="location-content">
       <div class="location-content-inner">
         <div class="location-description">
-          <div class="location-story">
-            <h3 class="location-story-title">
-              みなとみらいの夜景、<br>赤レンガの街並み、<br>山下公園の夕暮れ。
-            </h3>
-            <p class="location-story-text">
-              横浜は、二人の時間が重なる場所。<br>
-              デートで歩いた坂道、記念日のディナー、<br>
-              プロポーズの夜景。<br><br>
-              都会的な景観と海風が入り混じる横浜で、<br>
-              これからの二人の物語を残す。
-            </p>
+          <!-- 左カラム：タグ + ストーリー -->
+          <div class="location-text-column">
+            <div class="section-title-deco" data-deco="once">
+              <span class="section-title-deco__tag">YOKOHAMA</span>
+              <span class="section-title-deco__line"></span>
+            </div>
+            <div class="location-story">
+              <h3 class="location-story-title">
+                港と光、二人で歩いた時間。
+              </h3>
+              <p class="location-story-text">
+                みなとみらいの夜景、赤レンガの街並み。<br>
+                二人の時間が重なる場所で、これからの物語を。
+              </p>
+            </div>
           </div>
+          <!-- 右カラム：FEATURES -->
           <div class="location-features">
             <div class="location-feature-item">
               <div class="location-feature-icon">
@@ -3396,34 +3581,53 @@
         <p class="location-gallery-label">PHOTO GALLERY — 横浜</p>
         <div class="location-gallery-scroll">
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="yokohama/40258_0.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
+            <img src="images/yokohama/B48R5226.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="yokohama/40259_0.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
+            <img src="images/yokohama/B48R5331.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="yokohama/40260_0.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
+            <img src="images/yokohama/B48R5183.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="yokohama/40262_0.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
+            <img src="images/yokohama/B48R5253.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="yokohama/40264_0.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
+            <img src="images/yokohama/B48R5197.jpg" alt="横浜フォトウエディング" data-aspect="landscape">
           </div>
         </div>
       </div>
     </div>
     <div class="location-quote">
-      <p class="location-quote-text">
-        「横浜で過ごした時間が、<br>そのまま二人の歴史になる。」
-      </p>
+      <!-- 【前景装飾】引用符 / 横浜の引用強調 -->
+      <div class="quote-deco" data-deco="once">
+        <p class="location-quote-text">
+          横浜で過ごした時間が、<br>そのまま二人の歴史になる。
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- Location Showcase: 湘南 -->
   <section class="location-section" id="location-shonan" data-location="shonan">
     <div class="location-hero">
-      <div class="location-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80');"></div>
+      <!-- カルーセル背景（5枚の画像） -->
+      <div class="hero-carousel">
+        <div class="hero-carousel-slides" id="shonanCarousel">
+          <div class="hero-carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=1920&q=80');"></div>
+        </div>
+        <div class="carousel-dots" id="shonanCarouselDots">
+          <span class="carousel-dot active" data-index="0"></span>
+          <span class="carousel-dot" data-index="1"></span>
+          <span class="carousel-dot" data-index="2"></span>
+          <span class="carousel-dot" data-index="3"></span>
+          <span class="carousel-dot" data-index="4"></span>
+        </div>
+      </div>
       <div class="location-hero-overlay"></div>
       <div class="location-hero-content">
         <p class="location-number">LOCATION 02</p>
@@ -3434,18 +3638,23 @@
     <div class="location-content">
       <div class="location-content-inner">
         <div class="location-description">
-          <div class="location-story">
-            <h3 class="location-story-title">
-              江ノ島のシルエット、<br>鎌倉の小道、<br>夕陽に染まる海。
-            </h3>
-            <p class="location-story-text">
-              湘南は、思い出の海。<br>
-              サーフィンで出会った、<br>
-              砂浜でプロポーズされた、<br>
-              夏の終わりを二人で過ごした。<br><br>
-              原風景の中で、これからの景色を。
-            </p>
+          <!-- 左カラム：タグ + ストーリー -->
+          <div class="location-text-column">
+            <div class="section-title-deco" data-deco="once">
+              <span class="section-title-deco__tag">SHONAN</span>
+              <span class="section-title-deco__line"></span>
+            </div>
+            <div class="location-story">
+              <h3 class="location-story-title">
+                海と光、原風景の場所。
+              </h3>
+              <p class="location-story-text">
+                江ノ島のシルエット、鎌倉の小道。<br>
+                思い出の海で、これからの景色を。
+              </p>
+            </div>
           </div>
+          <!-- 右カラム：FEATURES -->
           <div class="location-features">
             <div class="location-feature-item">
               <div class="location-feature-icon">
@@ -3522,16 +3731,35 @@
       </div>
     </div>
     <div class="location-quote">
-      <p class="location-quote-text">
-        「海風が運ぶ、<br>二人の原風景。」
-      </p>
+      <!-- 【前景装飾】引用符 / 湘南の引用強調 -->
+      <div class="quote-deco" data-deco="once">
+        <p class="location-quote-text">
+          海風が運ぶ、<br>二人の原風景。
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- Location Showcase: 駒ヶ根 -->
   <section class="location-section" id="location-komagane" data-location="komagane">
     <div class="location-hero">
-      <div class="location-hero-bg" style="background-image: url('komagane/40277_0.jpg');"></div>
+      <!-- カルーセル背景（5枚の画像） -->
+      <div class="hero-carousel">
+        <div class="hero-carousel-slides" id="komaganeCarousel">
+          <div class="hero-carousel-slide active" style="background-image: url('images/komagane/mountain/B48R2918.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/komagane/mountain/B48R0007.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/komagane/mountain/B48R1939.jpg');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/komagane/studio/B48R6964.JPG');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('images/komagane/studio/B48R0725.jpg');"></div>
+        </div>
+        <div class="carousel-dots" id="komaganeCarouselDots">
+          <span class="carousel-dot active" data-index="0"></span>
+          <span class="carousel-dot" data-index="1"></span>
+          <span class="carousel-dot" data-index="2"></span>
+          <span class="carousel-dot" data-index="3"></span>
+          <span class="carousel-dot" data-index="4"></span>
+        </div>
+      </div>
       <div class="location-hero-overlay"></div>
       <div class="location-hero-content">
         <p class="location-number">LOCATION 03</p>
@@ -3542,18 +3770,23 @@
     <div class="location-content">
       <div class="location-content-inner">
         <div class="location-description">
-          <div class="location-story">
-            <h3 class="location-story-title">
-              南アルプスの麓、<br>伊那谷の風、<br>季節の彩り。
-            </h3>
-            <p class="location-story-text">
-              駒ヶ根は、帰る場所。<br>
-              育った風景、両親の住む家、<br>
-              子どもの頃に走った道。<br><br>
-              山に囲まれたこの場所で、<br>
-              新しい家族の門出を祝う。
-            </p>
+          <!-- 左カラム：タグ + ストーリー -->
+          <div class="location-text-column">
+            <div class="section-title-deco" data-deco="once">
+              <span class="section-title-deco__tag">KOMAGANE</span>
+              <span class="section-title-deco__line"></span>
+            </div>
+            <div class="location-story">
+              <h3 class="location-story-title">
+                南アルプスが見守る、<br>家族が生まれる森。
+              </h3>
+              <p class="location-story-text">
+                育った風景、帰る場所。<br>
+                山に囲まれたこの場所で、新しい家族の門出を。
+              </p>
+            </div>
           </div>
+          <!-- 右カラム：FEATURES -->
           <div class="location-features">
             <div class="location-feature-item">
               <div class="location-feature-icon">
@@ -3601,34 +3834,53 @@
         <p class="location-gallery-label">PHOTO GALLERY — 駒ヶ根</p>
         <div class="location-gallery-scroll">
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="komagane/40277_0.jpg" alt="駒ヶ根フォトウエディング" data-aspect="landscape">
+            <img src="images/komagane/mountain/B48R2918.jpg" alt="駒ヶ根フォトウエディング 山ロケ" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="komagane/40278_0.jpg" alt="駒ヶ根フォトウエディング" data-aspect="landscape">
+            <img src="images/komagane/mountain/B48R0007.jpg" alt="駒ヶ根フォトウエディング 山ロケ" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="komagane/40279_0.jpg" alt="駒ヶ根フォトウエディング" data-aspect="landscape">
+            <img src="images/komagane/studio/B48R6964.JPG" alt="駒ヶ根フォトウエディング スタジオ" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="komagane/40280_0.jpg" alt="駒ヶ根フォトウエディング" data-aspect="landscape">
+            <img src="images/komagane/studio/B48R0725.jpg" alt="駒ヶ根フォトウエディング スタジオ" data-aspect="landscape">
           </div>
           <div class="location-gallery-item" onclick="openLightbox(this)">
-            <img src="komagane/40282_0.jpg" alt="駒ヶ根フォトウエディング" data-aspect="landscape">
+            <img src="images/komagane/mountain/B48R1939.jpg" alt="駒ヶ根フォトウエディング 山ロケ" data-aspect="landscape">
           </div>
         </div>
       </div>
     </div>
     <div class="location-quote">
-      <p class="location-quote-text">
-        「山に囲まれて、<br>新しい家族が生まれる。」
-      </p>
+      <!-- 【前景装飾】引用符 / 駒ヶ根の引用強調 -->
+      <div class="quote-deco quote-deco--komagane" data-deco="once">
+        <p class="location-quote-text">
+          山に囲まれて、<br>新しい家族が生まれる。
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- Location Showcase: 豊橋 -->
   <section class="location-section" id="location-toyohashi" data-location="toyohashi">
     <div class="location-hero">
-      <div class="location-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80');"></div>
+      <!-- カルーセル背景（5枚の画像） -->
+      <div class="hero-carousel">
+        <div class="hero-carousel-slides" id="toyohashiCarousel">
+          <div class="hero-carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=80');"></div>
+          <div class="hero-carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=1920&q=80');"></div>
+        </div>
+        <div class="carousel-dots" id="toyohashiCarouselDots">
+          <span class="carousel-dot active" data-index="0"></span>
+          <span class="carousel-dot" data-index="1"></span>
+          <span class="carousel-dot" data-index="2"></span>
+          <span class="carousel-dot" data-index="3"></span>
+          <span class="carousel-dot" data-index="4"></span>
+        </div>
+      </div>
       <div class="location-hero-overlay"></div>
       <div class="location-hero-content">
         <p class="location-number">LOCATION 04</p>
@@ -3639,18 +3891,23 @@
     <div class="location-content">
       <div class="location-content-inner">
         <div class="location-description">
-          <div class="location-story">
-            <h3 class="location-story-title">
-              吉田城址、<br>商店街の温もり、<br>三河湾の夕景。
-            </h3>
-            <p class="location-story-text">
-              豊橋は、つながりの街。<br>
-              実家に帰れば顔見知り、<br>
-              商店街を歩けば「おかえり」。<br><br>
-              人の温かさに包まれて、<br>
-              家族の门出を祝う。
-            </p>
+          <!-- 左カラム：タグ + ストーリー -->
+          <div class="location-text-column">
+            <div class="section-title-deco" data-deco="once">
+              <span class="section-title-deco__tag">TOYOHASHI</span>
+              <span class="section-title-deco__line"></span>
+            </div>
+            <div class="location-story">
+              <h3 class="location-story-title">
+                人と人がつながる、<br>温かい街。
+              </h3>
+              <p class="location-story-text">
+                吉田城址、商店街の温もり。<br>
+                人の温かさに包まれて、家族の門出を。
+              </p>
+            </div>
           </div>
+          <!-- 右カラム：FEATURES -->
           <div class="location-features">
             <div class="location-feature-item">
               <div class="location-feature-icon">
@@ -3721,9 +3978,12 @@
       </div>
     </div>
     <div class="location-quote">
-      <p class="location-quote-text">
-        「商店街の温もりが、<br>二人を包み込む。」
-      </p>
+      <!-- 【前景装飾】引用符 / 豊橋の引用強調 -->
+      <div class="quote-deco" data-deco="once">
+        <p class="location-quote-text">
+          商店街の温もりが、<br>二人を包み込む。
+        </p>
+      </div>
     </div>
   </section>
 
@@ -4270,6 +4530,57 @@
       document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
     });
 
+    // モバイルメニュー閉じるボタン
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+
+    // ===== 全ロケ地カルーセル制御 =====
+    const slideInterval = 5000; // 5秒間隔
+
+    // カルーセル初期化関数
+    function initCarousel(carouselId, dotsId) {
+      const dots = document.querySelectorAll(`#${dotsId} .carousel-dot`);
+      const slides = document.querySelectorAll(`#${carouselId} .hero-carousel-slide`);
+      let currentSlide = 0;
+      let timer = null;
+
+      function updateDots(index) {
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      }
+
+      function startTimer() {
+        timer = setInterval(() => {
+          currentSlide = (currentSlide + 1) % 5;
+          updateDots(currentSlide);
+        }, slideInterval);
+      }
+
+      // ドットクリックでスライド切り替え
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          clearInterval(timer);
+          currentSlide = index;
+          updateDots(currentSlide);
+          startTimer();
+        });
+      });
+
+      startTimer();
+    }
+
+    // 各ロケ地のカルーセルを初期化
+    initCarousel('yokohamaCarousel', 'yokohamaCarouselDots');
+    initCarousel('shonanCarousel', 'shonanCarouselDots');
+    initCarousel('komaganeCarousel', 'komaganeCarouselDots');
+    initCarousel('toyohashiCarousel', 'toyohashiCarouselDots');
+
     // メニューリンクをクリックしたらメニューを閉じる
     mobileMenuLinks.forEach(link => {
       link.addEventListener('click', () => {
@@ -4282,29 +4593,40 @@
     // Navigation scroll effect
     const nav = document.getElementById('nav');
     const urgencyBanner = document.querySelector('.urgency-banner');
-    const isMobileView = window.innerWidth < 768;
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
         nav.classList.add('scrolled');
-        // モバイルではスクロール時にCTAバナーを非表示
-        if (isMobileView && urgencyBanner) {
-          urgencyBanner.classList.add('hidden');
-        }
       } else {
         nav.classList.remove('scrolled');
-        if (urgencyBanner) {
-          urgencyBanner.classList.remove('hidden');
-        }
       }
     });
 
-    // リサイズ時の判定更新
-    window.addEventListener('resize', () => {
-      const isMobileNow = window.innerWidth < 768;
-      if (urgencyBanner && !isMobileNow) {
-        urgencyBanner.classList.remove('hidden');
-      }
+    // ============================================
+    // 前景装飾コンポーネント（あしらい）
+    // - IntersectionObserverで1回発火→最終状態保持
+    // - Reduced Motion時は動き抑制、情報欠落なし
+    // ============================================
+    const decoElements = document.querySelectorAll('[data-deco="once"]');
+
+    const decoObserverOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const decoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 1回発火→visibleクラス付与（最終状態保持）
+          entry.target.classList.add('visible');
+          // 監視を解除（再演出なし）
+          decoObserver.unobserve(entry.target);
+        }
+      });
+    }, decoObserverOptions);
+
+    decoElements.forEach(el => {
+      decoObserver.observe(el);
     });
 
     // Section fade in on scroll
@@ -4340,23 +4662,6 @@
       conceptImageObserver.observe(img);
     });
 
-    // Concept Parallax Background
-    const conceptParallax = document.querySelector('.concept-parallax');
-    const conceptParallaxBg = document.querySelector('.concept-parallax-bg');
-
-    // Concept Parallax Visibility Observer
-    const parallaxObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.3 });
-
-    if (conceptParallax) {
-      parallaxObserver.observe(conceptParallax);
-    }
-
     // ===== 控えめなパララックス効果 =====
     // アクセシビリティ・モバイル対応
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -4386,18 +4691,6 @@
         }
       }
 
-      // 既存のconcept parallax（控えめに調整）
-      if (conceptParallaxBg && conceptParallax) {
-        const rect = conceptParallax.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        if (rect.top < windowHeight && rect.bottom > 0) {
-          const scrolled = (windowHeight - rect.top) / (windowHeight + rect.height);
-          const yPos = (scrolled - 0.5) * 8; // -4% to +4%（従来の-15%〜+15%から大幅に低減）
-          conceptParallaxBg.style.transform = `translateY(${yPos}%)`;
-        }
-      }
-
       parallaxTicking = false;
     }
 
@@ -4422,20 +4715,6 @@
 
     locationSections.forEach(section => {
       locationObserver.observe(section);
-    });
-
-    // Decorative Keywords - Scroll Animation
-    const decoKeywords = document.querySelectorAll('.deco-keyword');
-    const decoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.3, rootMargin: '-100px' });
-
-    decoKeywords.forEach(keyword => {
-      decoObserver.observe(keyword);
     });
 
     // Location Gallery - Horizontal Scroll Drag
