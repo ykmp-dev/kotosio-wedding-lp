@@ -356,6 +356,16 @@
       font-family: 'Noto Serif JP', serif;
     }
 
+    /* Utility - Hidden on SP */
+    .hidden-sp {
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .hidden-sp {
+        display: inline;
+      }
+    }
+
     /* Utility */
     .section {
       padding: 80px 24px;
@@ -1905,67 +1915,6 @@
     }
 
     /* Representative Section */
-    .representative {
-      background: var(--white);
-    }
-
-    .rep-content {
-      display: grid;
-      gap: 50px;
-      align-items: center;
-    }
-
-    @media (min-width: 768px) {
-      .rep-content {
-        grid-template-columns: 1fr 2fr;
-      }
-    }
-
-    .rep-image {
-      width: 100%;
-      max-width: 280px;
-      aspect-ratio: 3/4;
-      background: var(--secondary);
-      margin: 0 auto;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .rep-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .rep-info {
-      text-align: center;
-    }
-
-    @media (min-width: 768px) {
-      .rep-info {
-        text-align: left;
-      }
-    }
-
-    .rep-name {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .rep-title {
-      font-size: 13px;
-      color: var(--yokohama-light);
-      letter-spacing: 0.1em;
-      margin-bottom: 30px;
-    }
-
-    .rep-bio {
-      font-size: 14px;
-      color: var(--text-light);
-      line-height: 2.2;
-    }
-
     /* Q&A Section */
     .qa {
       background: var(--secondary);
@@ -2153,6 +2102,123 @@
       opacity: 0.6;
       text-align: center;
       line-height: 1.8;
+    }
+
+    /* About Us Section */
+    .about-us {
+      background: var(--cream);
+      padding: 80px 24px;
+    }
+
+    @media (min-width: 768px) {
+      .about-us {
+        padding: 100px 40px;
+      }
+    }
+
+    .about-us .section-title {
+      color: var(--primary);
+    }
+
+    .about-us .section-title::after {
+      background: linear-gradient(90deg, transparent, var(--yokohama), var(--komagane), transparent);
+    }
+
+    .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about-intro {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .about-intro-text {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(16px, 3vw, 20px);
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .about-locations {
+      display: grid;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    @media (min-width: 768px) {
+      .about-locations {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .about-location {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: var(--transition-soft);
+    }
+
+    .about-location:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .about-location-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .about-location-name::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yokohama);
+    }
+
+    .about-location:nth-child(2) .about-location-name::before,
+    .about-location:nth-child(3) .about-location-name::before {
+      background: var(--komagane);
+    }
+
+    .about-location:nth-child(4) .about-location-name::before {
+      background: #c4a87c;
+    }
+
+    .about-location-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.9;
+    }
+
+    .about-philosophy {
+      text-align: center;
+      padding: 50px 30px;
+      background: linear-gradient(135deg, rgba(91, 163, 184, 0.08) 0%, rgba(139, 175, 122, 0.08) 100%);
+      border-radius: 16px;
+    }
+
+    .about-philosophy-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: var(--primary);
+    }
+
+    .about-philosophy-text {
+      font-size: 14px;
+      line-height: 2.2;
+      color: var(--text);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* Footer */
@@ -3749,28 +3815,6 @@
     </div>
   </section>
 
-  <!-- Representative Section -->
-  <section class="section representative">
-    <div class="container">
-      <h2 class="section-title">代表紹介</h2>
-      <div class="rep-content">
-        <div class="rep-image">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="鈴木正憲">
-        </div>
-        <div class="rep-info">
-          <h3 class="rep-name">鈴木 正憲</h3>
-          <p class="rep-title">KOTOSIO 代表</p>
-          <p class="rep-bio">
-            この仕事を20年以上やっています。数えきれないカップルの「一生に一度」に関わってきました。<br><br>
-            でも、まだ飽きないんです。<br><br>
-            それぞれの二人が、それぞれの場所で、それぞれの物語を紡ぐ。その瞬間に立ち会えることは、毎回新鮮です。<br><br>
-            駒ヶ根、豊橋、湘南、横浜。4つの土地で、次はあなたの番です。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Steps Section -->
   <section class="section steps">
     <div class="container">
@@ -4001,6 +4045,52 @@
           ※ 入力内容は相談以外には使いません。
         </p>
       </form>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="section about-us" id="about">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-content">
+        <div class="about-intro">
+          <p class="about-intro-text">
+            KOTOSIOは、湘南・横浜・駒ヶ根・豊橋の4つの土地で<br class="hidden-sp">
+            フォトウエディング・ロケーション撮影を提供しています。<br>
+            2004年の創業以来、「ただいま」と言える場所で、<br class="hidden-sp">
+            家族が生まれる瞬間に立ち合ってきました。
+          </p>
+        </div>
+
+        <div class="about-locations">
+          <div class="about-location">
+            <h3 class="about-location-name">湘南・鎌倉</h3>
+            <p class="about-location-desc">海と光が織りなす湘南の波。開放的なビーチと古都鎌倉の静けさ。日本の夏の思い出が詰まった場所で、二人の物語を。</p>
+          </div>
+          <div class="about-location">
+            <h3 class="about-location-name">横浜・みなとみらい</h3>
+            <p class="about-location-desc">港町の風と夕景。レンガ倉庫、赤レンガパーク、山下公園。都会と海が調和する景観で、洗練された写真を。</p>
+          </div>
+          <div class="about-location">
+            <h3 class="about-location-name">駒ヶ根・伊那谷</h3>
+            <p class="about-location-desc">南アルプスと中央アルプスに抱かれた森と里。四季の移ろいと土地の温もり。山と空に見守られる結婚式を。</p>
+          </div>
+          <div class="about-location">
+            <h3 class="about-location-name">豊橋・東三河</h3>
+            <p class="about-location-desc">三河湾の穏やかな波と田園の風景。歴史と自然が共存する場所で、温かい家族の時間を刻む写真を。</p>
+          </div>
+        </div>
+
+        <div class="about-philosophy">
+          <h3 class="about-philosophy-title">土地が語り、写真が遺し、<br>人生の「ことしお」になる結婚式を。</h3>
+          <p class="about-philosophy-text">
+            私たちは場所を売るのではありません。<br>
+            その場所に込められた二人の物語を、写真という形に残すお手伝いをしています。<br>
+            いつか子どもに、孫に見せたとき、「ここで始まったんだよ」と<br class="hidden-sp">
+            誇らしく話せる一枚を。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
