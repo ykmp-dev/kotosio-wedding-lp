@@ -2958,11 +2958,17 @@
     @media (min-width: 768px) {
       .urgency-banner {
         z-index: 900;
+        padding: 16px 24px;
+        min-height: 52px;
       }
     }
 
     .urgency-banner strong {
       font-weight: 500;
+    }
+
+    .urgency-banner.hidden {
+      display: none;
     }
 
     /* 信頼バッジ */
@@ -4180,11 +4186,29 @@
 
     // Navigation scroll effect
     const nav = document.getElementById('nav');
+    const urgencyBanner = document.querySelector('.urgency-banner');
+    const isMobileView = window.innerWidth < 768;
+
     window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
         nav.classList.add('scrolled');
+        // モバイルではスクロール時にCTAバナーを非表示
+        if (isMobileView && urgencyBanner) {
+          urgencyBanner.classList.add('hidden');
+        }
       } else {
         nav.classList.remove('scrolled');
+        if (urgencyBanner) {
+          urgencyBanner.classList.remove('hidden');
+        }
+      }
+    });
+
+    // リサイズ時の判定更新
+    window.addEventListener('resize', () => {
+      const isMobileNow = window.innerWidth < 768;
+      if (urgencyBanner && !isMobileNow) {
+        urgencyBanner.classList.remove('hidden');
       }
     });
 
