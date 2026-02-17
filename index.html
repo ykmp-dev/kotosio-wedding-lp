@@ -539,7 +539,7 @@
     }
 
     .wedding-deco.visible {
-      opacity: 0.07;
+      opacity: 0.18;
     }
 
     /* 左右配置 */
@@ -571,6 +571,33 @@
       padding: 12px 24px;
       min-height: 44px;
       transition: var(--transition);
+    }
+
+    /* モバイルではnavをバナーの下に配置 */
+    @media (max-width: 767px) {
+      .nav {
+        top: 44px;
+        z-index: 950;
+      }
+      .nav.scrolled {
+        z-index: 950;
+      }
+      .hamburger span {
+        background: var(--primary);
+      }
+      .nav:not(.scrolled) .hamburger span {
+        background: var(--white);
+      }
+    }
+
+    /* PCではnavがバナーの上 */
+    @media (min-width: 768px) {
+      .nav {
+        z-index: 1000;
+      }
+      .nav.scrolled {
+        z-index: 1000;
+      }
     }
 
     .nav.scrolled {
@@ -1474,11 +1501,39 @@
     }
 
     .value-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
       font-family: 'Noto Serif JP', serif;
       font-size: 48px;
       color: var(--yokohama-light);
       opacity: 0.5;
       margin-bottom: 16px;
+    }
+
+    .value-icon {
+      width: 32px;
+      height: 32px;
+      opacity: 0.6;
+    }
+
+    .value-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--yokohama);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .value-card:nth-child(2) .value-icon svg {
+      stroke: var(--komagane);
+    }
+
+    .value-card:nth-child(3) .value-icon svg {
+      stroke: #c4a87c; /* gold */
     }
 
     .value-title {
@@ -2536,9 +2591,15 @@
     /* CTA強化セクション */
     .cta-banner {
       background: linear-gradient(135deg, var(--yokohama-light) 0%, var(--yokohama) 100%);
-      padding: 100px 24px;
+      padding: 80px 24px;
       text-align: center;
       color: var(--white);
+    }
+
+    @media (min-width: 768px) {
+      .cta-banner {
+        padding: 100px 40px;
+      }
     }
 
     .cta-banner-title {
@@ -2824,16 +2885,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 900;
+      z-index: 1000;
+    }
+
+    /* PCではnavがバナーの上 */
+    @media (min-width: 768px) {
+      .urgency-banner {
+        z-index: 900;
+      }
     }
 
     .urgency-banner strong {
       font-weight: 500;
-    }
-
-    /* ナビゲーションがスクロール時にバナーの上に重なる */
-    .nav.scrolled {
-      z-index: 1000;
     }
 
     /* 信頼バッジ */
@@ -3069,17 +3132,26 @@
 
       <div class="brand-values">
         <div class="value-card">
-          <div class="value-number">01</div>
+          <div class="value-number">
+            <span class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            01
+          </div>
           <h3 class="value-title">場所に、理由がある。</h3>
           <p class="value-desc">その海で出会ったから。<br>その山で育ったから。<br>理由があるから、写真に残る。</p>
         </div>
         <div class="value-card">
-          <div class="value-number">02</div>
+          <div class="value-number">
+            <span class="value-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            02
+          </div>
           <h3 class="value-title">正解は、お二人が決める。</h3>
           <p class="value-desc">大きな式を挙げなくてもいい。<br>写真だけでもいい。<br>二人らしさが、正解。</p>
         </div>
         <div class="value-card">
-          <div class="value-number">03</div>
+          <div class="value-number">
+            <span class="value-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8"/><path d="M8 11h6"/></svg></span>
+            03
+          </div>
           <h3 class="value-title">写真は、物語になる。</h3>
           <p class="value-desc">いつか子どもに見せた時、<br>「ここで始まったんだよ」と<br>話せる一枚に。</p>
         </div>
