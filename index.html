@@ -653,8 +653,12 @@
     .hamburger span {
       width: 24px;
       height: 1px;
-      background: #1a1a1a;
+      background: var(--white);
       transition: var(--transition);
+    }
+
+    .nav.scrolled .hamburger span {
+      background: #1a1a1a;
     }
 
     .hamburger.active span:nth-child(1) {
