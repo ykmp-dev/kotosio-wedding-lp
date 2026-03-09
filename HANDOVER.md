@@ -1,137 +1,144 @@
-# KOTOSIO ウエディング LP - セッション引継ぎ資料
+# KOTOSIO LP 引き継ぎ資料
 
-## プロジェクト現状
-
-### ファイル構成
-```
-/home/yuber/workspace/KOTOSIO/
-├── CLAUDE.md              # プロジェクト概要・仕様
-├── HANDOVER.md            # このファイル（引継ぎ資料）
-├── sessionhistory.md      # セッション履歴
-├── index.html             # LP本体（開発中）
-├── logo.svg               # 黒ロゴ
-├── .mcp.json              # Serena MCP設定（新規追加）
-└── ターゲット.md          # ターゲット設計書
-```
-
-### 最新のLPデザイン方針（変更点あり）
-
-#### 変更前のコンセプト
-- エレガント・モダン
-- 黒ベースのカラー（#1a1a1a）
-
-#### 変更後のコンセプト（現行）
-- **Landscape感重視**（海と山）
-- **さわやかな配色**
-- **繊細なグラデーション**（AIっぽさを回避）
-
-### 最新カラーパレット
-```css
-/* メインカラー */
---primary: #2a4a52;           /* 水色ベースのダーク */
---text: #3a4a4f;              /* 青みグレー */
---text-light: #5a6a6f;
-
-/* 横浜・湘南（海） */
---yokohama: #5BA3B8;
---yokohama-light: #7BB9CE;
---yokohama-dark: #4A8A9F;
-
-/* 駒ヶ根（森） */
---komagane: #8BAF7A;
---komagane-light: #9DC48B;
---komagane-dark: #7A9E6B;
-
-/* 共通 */
---cream: #f5f0eb;
---white: #ffffff;
-```
-
-### カラーバランス（目標）
-- 白・クリーム（60%）
-- 横浜の水色（30%）
-- 駒ヶ根の薄緑（10%）
-
-### 最新UI調整内容
-1. **ロゴサイズ**
-   - SP: 56px
-   - PC: 64px
-
-2. **ナビゲーション**
-   - 余白: 12px 24px（詰める方向で調整）
-   - スクロール時: 白背景 + 水色シャドウ
-
-3. **グラデーション**
-   - 繊細に調整（色差を小さく）
-   - 各セクションで水色↔緑をミックス
-
-## 各セクションの最新配色
-
-| セクション | 配色 |
-|------------|------|
-| ナビ（スクロール時） | 白背景 + 水色シャドウ |
-| ロケーションクオート | 水色 → 緑グラデ |
-| リージョン | 水色 ↔ 緑 ↔ 水色（3色グラデ） |
-| ギャラリー | クリーム → 水色 → 緑 |
-| コンタクト | 水色 → 緑 |
-| フッター | 水色ダーク ↔ 緑ダーク |
-| 実績カウンター | 水色 → 緑（半調） |
-| 固定CTA | 水色 → 緑 |
-
-## 次回セッションでのタスク候補
-
-### 優先度高
-1. **ブラウザでの確認**
-   - 最新の配色・グラデを確認
-   - ロゴサイズ・ナビ余白の確認
-
-2. **写真素材の差し替え準備**
-   - プレースホルダーから本番写真へ
-   - 地域別の適切な写真選定
-
-3. **Figma to Studio用調整**
-   - HTML/CSSをFigmaに取り込みやすい形式に調整
-
-### 優先度中
-4. **レスポンシブ対応の細部調整**
-   - SPでの表示確認
-   - タブレット対応
-
-5. **アニメーション・インタラクション**
-   - パララックス効果の調整
-   - スクロールアニメーションの確認
-
-6. **フォーム機能**
-   - バリデーション
-   - 送信処理の実装
-
-## Serena MCPについて
-
-### セットアップ完了
-- `.mcp.json`作成済み
-- `settings.json`に`enableAllProjectMcpServers: true`追加済み
-
-### 使い方
-次回セッション以降、Serena MCPが自動的に有効になり：
-- セッション履歴の管理
-- セッション間のコンテキスト引継ぎ
-- プロジェクト状態の保持
-
-が可能になります。
-
-## 技術スタック
-- HTML5
-- CSS3（グリッド、フレックスボックス、グラデーション）
-- Vanilla JavaScript
-- レスポンシブデザイン（SPファースト）
-
-## 参考サイト
-- ウエディングフォト系: https://mihoncho.com/photostudio/
-- ランドスケープ系: https://www.format.com/magazine/landscape-photography-portfolios
-
-## ブランドメッセージ
-- **理念**: 「土地が語り、写真が遺し、人生の"ことしお"になる結婚式を。」
-- **中心軸**: 「ただいま、と言える場所で、家族が生まれる。」
+## サイト概要
+- URL: https://kotosio.com
+- フレームワーク: 静的HTML + CSS + JavaScript
+- CMS: microCMS
+- デプロイ: Netlify（GitHub連携）
 
 ---
-更新日: 2025-02-16
+
+## ファイル構成
+
+```
+/home/yuber/workspace/KOTOSIO/
+├── index.html              # 本番LP（メイン）
+├── index-figma.html        # Figma取込用（静的）
+├── images/                 # 画像フォルダ
+│   ├── yokohama/
+│   ├── shonan/
+│   ├── komagane/
+│   └── toyohashi/
+└── microcms-*.json         # APIスキーマ定義ファイル
+```
+
+---
+
+## microCMS 設定
+
+### サービス情報
+- サービスID: `kotosio`
+- APIキー: `ypPunTvi0Ww1WfXgUiobybLT21iro6d8N4n8`
+
+### API一覧（最大5個）
+
+| # | API名 | エンドポイント | 用途 |
+|---|-------|---------------|------|
+| 1 | locations | locations | ロケーション名、タグライン、説明、カルーセル画像 |
+| 2 | gallery | gallery | ギャラリー画像、カテゴリ |
+| 3 | testimonials | testimonials | お客様の声 |
+| 4 | site-content | site-content | Hero、ブランド、CREDO、Q&A、サービス等（key-value） |
+| 5 | location-features | location-features | 各ロケのFEATURES、ストーリー、引用文 |
+
+---
+
+## コンテンツ編集手順
+
+### テキスト・画像を変更する場合
+1. https://kotosio.microcms.io/ にログイン
+2. 該当するAPIを選択
+3. コンテンツを編集 → 「公開」ボタン
+4. 数分で本番に反映（Webhook自動デプロイ）
+
+### HTML/CSS/JSを変更する場合
+1. ローカルで `index.html` を編集
+2. GitHubにプッシュ
+3. Netlifyが自動デプロイ
+
+---
+
+## 開発環境
+
+### ローカルプレビュー
+```bash
+cd /home/yuber/workspace/KOTOSIO
+python3 -m http.server 8000
+# http://localhost:8000 にアクセス
+```
+
+### microCMSデータの確認
+```bash
+curl -H "X-MICROCMS-API-KEY: ypPunTvi0Ww1WfXgUiobybLT21iro6d8N4n8" \
+  https://kotosio.microcms.io/api/v1/locations
+```
+
+---
+
+## Netlify 設定
+
+- ダッシュボード: https://app.netlify.com/
+- Build Hook URL: https://api.netlify.com/build_hooks/699aabf6cacbf145c13917d8
+- 連携リポジトリ: GitHub
+
+---
+
+## ブランドガイドライン
+
+### コンセプト
+「土地が語り、写真が遺し、人生の"ことしお"になる結婚式を。」
+
+### メインコピー
+「ただいま、と言える場所で、家族が生まれる。」
+
+### カラーパレット
+- Primary: #1a1a1a（ディープブラック）
+- Secondary: #f5f0eb（ウォームベージュ）
+- Accent: #8b7355（アースブラウン）
+
+### フォント
+- 見出し: Noto Serif JP
+- 本文: Noto Sans JP
+
+### ターゲット
+- 26〜45歳、世帯年収700万〜1500万
+- 湘南・横浜・駒ヶ根・豊橋に「ただいま」と言える場所を持つカップル
+
+---
+
+## site-content API キー一覧
+
+### Hero
+- `hero_title`: メインタイトル
+- `hero_subtitle`: サブタイトル
+
+### ブランドストーリー
+- `brand_title`: タイトル
+- `brand_description`: 説明文
+- `credo_1`〜`credo_5`: CREDO 5箇条
+
+### Q&A
+- `qa_1_q`〜`qa_N_q`: 質問
+- `qa_1_a`〜`qa_N_a`: 回答
+
+### サービス
+- `service_photo_title`: フォトウエディングタイトル
+- `service_photo_desc`: 説明
+- `service_ceremony_title`: 挙式・パーティタイトル
+- ...
+
+---
+
+## トラブルシューティング
+
+### microCMSの変更が反映されない
+- キャッシュをクリア
+- microCMSで「公開」ボタンが押されているか確認
+- Netlifyのデプロイ状況を確認
+
+### 画像が表示されない
+- microCMSの画像URLが正しいか確認
+- 画像サイズが大きすぎないか確認
+
+### デプロイが失敗する
+- GitHubのコミットにエラーがないか確認
+- Netlifyのデプロイログを確認
