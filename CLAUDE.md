@@ -8,7 +8,7 @@ KOTOSIO Wedding LP — single-page landing page for wedding photography service 
 
 - **Stack**: Static HTML + inline CSS/JS (no build step, no framework, no package.json)
 - **Deploy**: Netlify via GitHub Actions → push to `main` triggers deploy
-- **URL**: https://kotosio.com
+- **URL**: https://kotosio-wedding-lp.netlify.app
 
 ## Development
 
