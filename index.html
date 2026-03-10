@@ -4548,12 +4548,16 @@
     // ===== 全ロケ地カルーセル制御 =====
     const slideInterval = 5000; // 5秒間隔
 
-    // カルーセル初期化関数
+    // カルーセル初期化関数（セクションが見えた時に1枚目から開始）
     function initCarousel(carouselId, dotsId) {
       const dots = document.querySelectorAll(`#${dotsId} .carousel-dot`);
       const slides = document.querySelectorAll(`#${carouselId} .hero-carousel-slide`);
+      const slidesContainer = document.getElementById(carouselId);
+      if (!slidesContainer || slides.length === 0) return;
+
       let currentSlide = 0;
       let timer = null;
+      let started = false;
 
       function updateDots(index) {
         dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
@@ -4561,8 +4565,9 @@
       }
 
       function startTimer() {
+        if (timer) clearInterval(timer);
         timer = setInterval(() => {
-          currentSlide = (currentSlide + 1) % 5;
+          currentSlide = (currentSlide + 1) % slides.length;
           updateDots(currentSlide);
         }, slideInterval);
       }
@@ -4577,7 +4582,23 @@
         });
       });
 
-      startTimer();
+      // セクションが画面に入った時に1枚目から開始
+      const section = slidesContainer.closest('.location-section');
+      if (section) {
+        const carouselObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !started) {
+              started = true;
+              currentSlide = 0;
+              updateDots(0);
+              startTimer();
+            }
+          });
+        }, { threshold: 0.3 });
+        carouselObserver.observe(section);
+      } else {
+        startTimer();
+      }
     }
 
     // 各ロケ地のカルーセルを初期化（グローバル関数として公開）
