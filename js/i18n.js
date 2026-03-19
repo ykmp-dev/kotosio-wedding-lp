@@ -70,14 +70,14 @@
 
   // トグルボタンのUI更新（PC用とSP用の両方に対応）
   function updateToggleUI(lang) {
-    ['langBtnJa', 'langBtnJaSp'].forEach(function(id) {
+    ['langBtnJa', 'langBtnJaSp', 'langBtnJaMobile'].forEach(function(id) {
       var btn = document.getElementById(id);
       if (btn) {
         if (lang === 'ja') btn.classList.add('active');
         else btn.classList.remove('active');
       }
     });
-    ['langBtnEn', 'langBtnEnSp'].forEach(function(id) {
+    ['langBtnEn', 'langBtnEnSp', 'langBtnEnMobile'].forEach(function(id) {
       var btn = document.getElementById(id);
       if (btn) {
         if (lang === 'en') btn.classList.add('active');

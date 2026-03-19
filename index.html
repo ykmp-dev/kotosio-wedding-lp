@@ -728,8 +728,36 @@
       color: var(--yokohama-light);
     }
 
+    .mobile-menu-lang {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s;
+    }
+
+    .mobile-menu.active .mobile-menu-lang {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-lang .lang-btn {
+      padding: 8px 20px;
+      font-size: 14px;
+      border-color: rgba(255,255,255,0.4);
+      color: #fff;
+    }
+
+    .mobile-menu-lang .lang-btn.active {
+      background: #8b7355;
+      border-color: #8b7355;
+      color: #fff;
+    }
+
     .mobile-menu-cta {
-      margin-top: 48px;
+      margin-top: 24px;
       padding: 16px 40px;
       background: transparent;
       border: 1px solid var(--yokohama-light);
@@ -1213,11 +1241,17 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s;
+      animation: locationNameFallback 0s 2s forwards;
+    }
+
+    @keyframes locationNameFallback {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .location-section.visible .location-name {
       opacity: 1;
       transform: translateY(0);
+      animation: none;
     }
 
     .location-tagline {
@@ -1226,11 +1260,13 @@
       opacity: 0;
       transform: translateY(20px);
       transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s;
+      animation: locationNameFallback 0s 2.3s forwards;
     }
 
     .location-section.visible .location-tagline {
       opacity: 0.9;
       transform: translateY(0);
+      animation: none;
     }
 
     /* Location Content */
@@ -3308,19 +3344,7 @@
     }
 
     .lang-toggle-sp {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      position: absolute;
-      right: 60px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    @media (min-width: 1024px) {
-      .lang-toggle-sp {
-        display: none;
-      }
+      display: none;
     }
 
     .lang-btn {
@@ -3390,10 +3414,6 @@
           <button id="langBtnEn" class="lang-btn" onclick="switchLang('en')">EN</button>
         </div>
       </div>
-      <div class="lang-toggle-sp">
-        <button id="langBtnJaSp" class="lang-btn active" onclick="switchLang('ja')">JP</button>
-        <button id="langBtnEnSp" class="lang-btn" onclick="switchLang('en')">EN</button>
-      </div>
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -3415,6 +3435,10 @@
       <a href="#region" class="mobile-menu-link" data-i18n="header.mobile_nav_area">地域</a>
       <a href="#service" class="mobile-menu-link" data-i18n="header.mobile_nav_service">サービス</a>
       <a href="#contact" class="mobile-menu-link" data-i18n="header.mobile_nav_contact">お問い合わせ</a>
+    </div>
+    <div class="mobile-menu-lang">
+      <button id="langBtnJaMobile" class="lang-btn active" onclick="switchLang('ja')">JP</button>
+      <button id="langBtnEnMobile" class="lang-btn" onclick="switchLang('en')">EN</button>
     </div>
     <a href="#contact" class="mobile-menu-cta" data-i18n="header.mobile_cta">無料相談を予約</a>
   </div>
@@ -4810,7 +4834,7 @@
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.2, rootMargin: '-50px' });
+    }, { threshold: 0.1 });
 
     locationSections.forEach(section => {
       locationObserver.observe(section);
@@ -5000,12 +5024,14 @@
     // スクロールCTA表示
     const scrollCta = document.getElementById('scrollCta');
     let scrollCtaShown = false;
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 500 && !scrollCtaShown) {
-        scrollCta.classList.add('visible');
-        scrollCtaShown = true;
-      }
-    });
+    if (scrollCta) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500 && !scrollCtaShown) {
+          scrollCta.classList.add('visible');
+          scrollCtaShown = true;
+        }
+      });
+    }
 
     // 離脱防止ポップアップ（マウスが画面外に出た時）
     const exitPopup = document.getElementById('exitPopup');
