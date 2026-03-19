@@ -4824,20 +4824,14 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          locationObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0, rootMargin: '0px 0px 50px 0px' });
 
     locationSections.forEach(section => {
       locationObserver.observe(section);
     });
-
-    // フォールバック: IntersectionObserverが発火しなかった場合、2秒後に強制表示
-    setTimeout(() => {
-      locationSections.forEach(section => {
-        section.classList.add('visible');
-      });
-    }, 2000);
 
     // Location Gallery - Horizontal Scroll Drag
     const galleryScrolls = document.querySelectorAll('.location-gallery-scroll');
