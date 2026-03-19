@@ -1240,18 +1240,12 @@
       margin-bottom: 20px;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s;
-      animation: locationNameFallback 0s 2s forwards;
-    }
-
-    @keyframes locationNameFallback {
-      to { opacity: 1; transform: translateY(0); }
+      transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s, transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s;
     }
 
     .location-section.visible .location-name {
       opacity: 1;
       transform: translateY(0);
-      animation: none;
     }
 
     .location-tagline {
@@ -1259,14 +1253,12 @@
       letter-spacing: 0.15em;
       opacity: 0;
       transform: translateY(20px);
-      transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s;
-      animation: locationNameFallback 0s 2.3s forwards;
+      transition: opacity 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s, transform 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s;
     }
 
     .location-section.visible .location-tagline {
       opacity: 0.9;
       transform: translateY(0);
-      animation: none;
     }
 
     /* Location Content */
@@ -4839,6 +4831,13 @@
     locationSections.forEach(section => {
       locationObserver.observe(section);
     });
+
+    // フォールバック: IntersectionObserverが発火しなかった場合、2秒後に強制表示
+    setTimeout(() => {
+      locationSections.forEach(section => {
+        section.classList.add('visible');
+      });
+    }, 2000);
 
     // Location Gallery - Horizontal Scroll Drag
     const galleryScrolls = document.querySelectorAll('.location-gallery-scroll');
