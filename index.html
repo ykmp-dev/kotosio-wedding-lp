@@ -3293,6 +3293,65 @@
       object-fit: cover;
       transition: transform 0.3s;
     }
+    /* 言語切り替えトグル */
+    .lang-toggle {
+      display: none;
+      align-items: center;
+      gap: 2px;
+      margin-left: 20px;
+    }
+
+    @media (min-width: 1024px) {
+      .lang-toggle {
+        display: flex;
+      }
+    }
+
+    .lang-toggle-sp {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @media (min-width: 1024px) {
+      .lang-toggle-sp {
+        display: none;
+      }
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .lang-btn.active {
+      background: #8b7355;
+      border-color: #8b7355;
+      color: #fff;
+    }
+
+    /* スクロール後の色変更 */
+    .nav.scrolled .lang-btn {
+      border-color: rgba(0,0,0,0.3);
+      color: #333;
+    }
+
+    .nav.scrolled .lang-btn.active {
+      background: #8b7355;
+      border-color: #8b7355;
+      color: #fff;
+    }
   </style>
 
 </head>
@@ -3326,6 +3385,14 @@
         <a href="#region" class="nav-link">地域</a>
         <a href="#service" class="nav-link">サービス</a>
         <a href="#contact" class="nav-link">お問い合わせ</a>
+        <div class="lang-toggle">
+          <button id="langBtnJa" class="lang-btn active" onclick="switchLang('ja')">JP</button>
+          <button id="langBtnEn" class="lang-btn" onclick="switchLang('en')">EN</button>
+        </div>
+      </div>
+      <div class="lang-toggle-sp">
+        <button id="langBtnJaSp" class="lang-btn active" onclick="switchLang('ja')">JP</button>
+        <button id="langBtnEnSp" class="lang-btn" onclick="switchLang('en')">EN</button>
       </div>
       <div class="hamburger" id="hamburger">
         <span></span>
@@ -5188,5 +5255,6 @@
   </script>
 
 
+  <script src="js/i18n.js"></script>
 </body>
 </html>
