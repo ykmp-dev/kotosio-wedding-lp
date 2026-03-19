@@ -4830,7 +4830,7 @@
           locationObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0, rootMargin: '0px 0px 150px 0px' });
+    }, { threshold: 0.1 });
 
     locationHeroContents.forEach(el => {
       locationObserver.observe(el);
