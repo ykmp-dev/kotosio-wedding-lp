@@ -4819,18 +4819,21 @@
     }
 
     // Location Sections - Visibility Observer
-    const locationSections = document.querySelectorAll('.location-section');
+    // .location-hero-contentを監視し、親の.location-sectionにvisibleを付与
+    // （セクション全体を監視するとtransition完了後に名前が見える問題を回避）
+    const locationHeroContents = document.querySelectorAll('.location-hero-content');
     const locationObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          const section = entry.target.closest('.location-section');
+          if (section) section.classList.add('visible');
           locationObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0, rootMargin: '0px 0px 50px 0px' });
+    }, { threshold: 0.1 });
 
-    locationSections.forEach(section => {
-      locationObserver.observe(section);
+    locationHeroContents.forEach(el => {
+      locationObserver.observe(el);
     });
 
     // Location Gallery - Horizontal Scroll Drag
